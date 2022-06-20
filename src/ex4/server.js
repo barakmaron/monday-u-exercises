@@ -1,10 +1,10 @@
-import express from 'express';
-import morgan from 'morgan';
-import compression from 'compression';
-import ErrorHandler from './server/middleware/ErrorHandler.js';
-import task_router from './server/routes/task.js';
-import pokemon_router from './server/routes/pokemon.js';
-import bodyParser from 'body-parser';
+const express = require('express');
+const morgan = require('morgan');
+const compression = require('compression');
+const ErrorHandler = require('./server/middleware/ErrorHandler.js');
+const task_router = require('./server/routes/task.js');
+const pokemon_router = require('./server/routes/pokemon.js');
+const bodyParser = require('body-parser');
 
 const app = express();
 

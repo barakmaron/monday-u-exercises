@@ -14,7 +14,6 @@
       "tasks.json"
     ]
   },
-  "type": "module",
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -26,6 +25,7 @@
     "helmet": "^5.1.0",
     "morgan": "^1.10.0",
     "node-fetch": "^3.2.6",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "sequelize": "^7.0.0-alpha.9"
   }
 }

@@ -1,4 +1,4 @@
-export default function ErrorHandler(err, req, res, next) {
+function ErrorHandler(err, req, res, next) {
     if (err.length) {
         err.forEach(error => {
             console.log("Received error", error.message);
@@ -21,3 +21,5 @@ export default function ErrorHandler(err, req, res, next) {
         });
     }
 }
+
+module.exports = ErrorHandler;

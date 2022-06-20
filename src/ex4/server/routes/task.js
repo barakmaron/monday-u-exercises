@@ -1,14 +1,14 @@
-import express from 'express';
-import { checkSchema } from 'express-validator';
-import {
+const express = require('express');
+const { checkSchema } = require('express-validator');
+const {
     GetTasks,
     AddTask,
     DeleteTasks,
     DeleteTask,
     CompleteTask,
     SortTasksByName
-} from '../controllers/TaskController.js';
-import { SCHEMA_ID, SCHEMA_TASK } from '../validation/scehma.js';
+} = require('../controllers/TaskController.js');
+const { SCHEMA_ID, SCHEMA_TASK } = require('../validation/scehma.js');
 
 const task_router = express.Router();
 
@@ -19,4 +19,4 @@ task_router.delete('/:id', checkSchema(SCHEMA_ID), DeleteTask);
 task_router.put('/sortbyname', SortTasksByName)
 task_router.patch('/:id', checkSchema(SCHEMA_ID), CompleteTask);
 
-export default task_router;
+module.exports = task_router;

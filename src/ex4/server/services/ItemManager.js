@@ -1,49 +1,45 @@
-import FileManager from '../clients/FileManager.mjs';
-import { GetPokemonById, GetPokemonsByList } from './PokemonService.mjs';
-const file_manager = new FileManager();
+const { GetPokemonById, GetPokemonsByList } = require('./PokemonService.js');
+const StorageService = require('./StorageService.js');
 
 async function ReadTasks() {
-  try {
+ /* try {
     // get json object
     const file_read_promise = await file_manager.ReadFromFileTasks();
     // assing json object to tasks
     return file_read_promise;
   } catch (error) {
     console.log(error);
-  }
+  }*/
 }
 
 async function WriteTasks(tasks) {
-  try {
+  /*try {
     // set json object to file
     await file_manager.WriteToFileTasksArray(tasks);
   } catch (error) {
     console.log(error);
-  }
+  }*/
 }
 
-async function GetTasksFromFile() {
-  return await ReadTasks();
+async function GetTasks() {
+  return await StorageService.GetTasks();
 }
 
 async function AddRegularTask(task) {
-  const tasks = await GetTasksFromFile();
-  tasks.push({ name: task, id: 'Regular task', completed: false });
-  await WriteTasks(tasks);
+  await StorageService.CreateTask({ name: task, id: 'Regular task', completed: false });
 };
 
 async function AddPokemon(pokemon_id) {
   try {
-    const tasks = await GetTasksFromFile();
+    const tasks = await GetTasks();
     const pokemon = await GetPokemonById(pokemon_id);
     InsertPokemon(pokemon, tasks);
     await WriteTasks(tasks);
   } catch (error) {
-    if(error.response.status === 404)
-    {
+    if (error.response.status === 404) {
       const err = new Error(`Pokemon with ID ${pokemon_id} was not found`);
       err.statusCode = 404;
-      throw err;      
+      throw err;
     }
     throw error;
   }
@@ -51,19 +47,17 @@ async function AddPokemon(pokemon_id) {
 
 async function AddPokemons(list) {
   try {
-    const tasks = await GetTasksFromFile();
+    const tasks = await GetTasks();
     const pokemons = await GetPokemonsByList(list);
     const errors = [];
     pokemons.forEach((pokemon) => {
-      try
-      {
+      try {
         InsertPokemon(pokemon, tasks);
-      }catch(error)
-      {
+      } catch (error) {
         errors.push(error);
-      }      
+      }
     });
-    if(errors.length)
+    if (errors.length)
       throw errors;
     await WriteTasks(tasks);
   } catch (error) {
@@ -76,19 +70,19 @@ async function DeleteTasks() {
 }
 
 async function DeleteTask(task_id) {
-  const tasks = await GetTasksFromFile();
+  const tasks = await GetTasks();
   tasks.splice(task_id, 1);
   await WriteTasks(tasks);
 }
 
 async function CompleteTask(task_id) {
-  const tasks = await GetTasksFromFile();
+  const tasks = await GetTasks();
   tasks[task_id].completed = !tasks[task_id].completed;
   await WriteTasks(tasks);
 }
 
 async function SortTasksByName() {
-  const tasks = await GetTasksFromFile();
+  const tasks = await GetTasks();
   tasks.sort((a, b) => {
     // tasks object has name or data for error
     const item1 = a.name;
@@ -118,16 +112,20 @@ function InsertPokemon(pokemon, tasks) {
     throw error;
   }
 }
+const _isNumber = value => !isNaN(Number(value));
+const _isList = value => value.split(",").every(this._isNumber);
 
 const ItemManagerService = {
-  GetTasksFromFile,
+  GetTasksFromFile: GetTasks,
   AddPokemon,
   AddPokemons,
   AddRegularTask,
   DeleteTask,
   DeleteTasks,
   CompleteTask,
-  SortTasksByName
+  SortTasksByName,
+  _isList,
+  _isNumber
 };
 
-export default ItemManagerService;
+module.exports = ItemManagerService;

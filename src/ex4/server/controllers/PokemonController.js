@@ -1,9 +1,9 @@
-import { GetPokemonsNames } from '../services/PokemonService.mjs';
+const { GetPokemonsNames } = require('../services/PokemonService.js');
 
 /**
 * get list of all pokemon
 */
-export async function GetPokemons(request, response, next) {
+async function GetPokemons(request, response, next) {
     try {
         const pokemons = await GetPokemonsNames();
         return response.status(200).json({
@@ -14,4 +14,8 @@ export async function GetPokemons(request, response, next) {
         next(error);
     }
 }
+
+module.exports = { 
+    GetPokemons
+};
 

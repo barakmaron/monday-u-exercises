@@ -1,4 +1,4 @@
-export const SCHEMA_ID = {
+const SCHEMA_ID = {
     id: {
         in: ['params', 'query'],
         errorMessage: 'ID is wrong',
@@ -6,7 +6,7 @@ export const SCHEMA_ID = {
     }
 };
 
-export const SCHEMA_TASK = {
+const SCHEMA_TASK = {
     task: {
         in: ['params', 'query'],
         errorMessage: 'Task is wrong',
@@ -15,4 +15,9 @@ export const SCHEMA_TASK = {
             options: { min: 1 }
         }
     }
+}
+
+module.exports = {
+    SCHEMA_ID,
+    SCHEMA_TASK
 }

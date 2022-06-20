@@ -1,19 +1,19 @@
-import PokemonClient from '../clients/PokemonClient.mjs';
+const PokemonClient = require('../clients/PokemonClient.js');
 
 const pokemon_client = new PokemonClient();
-export async function GetPokemonsNames() {
+async function GetPokemonsNames() {
     const req = Promise.resolve(pokemon_client.FetchAllPokemonsNamesRequest());
     const pokemons = await req;
     return Promise.resolve(ParsePokemonNamesResponse(pokemons));
 }
 
-export async function GetPokemonById(id) {
+async function GetPokemonById(id) {
     const req = Promise.resolve(pokemon_client.FetchRequestById(id));
     const pokemon = await req;
     return Promise.resolve(FilterPokemonImageAttribute(pokemon));
 }
 
-export async function GetPokemonsByList(ids) {
+async function GetPokemonsByList(ids) {
     const pokemon_ids = ids.split(',');
     const requests = [];
     pokemon_ids.forEach(async (id) => {
@@ -55,3 +55,9 @@ function FilterPokemonImageAttribute(pokemon_object) {
     });
     return pokemon_filtered;
 }
+
+module.exports = {
+    GetPokemonsNames,
+    GetPokemonById,
+    GetPokemonsByList
+};

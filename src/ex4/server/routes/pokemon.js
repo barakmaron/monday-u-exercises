@@ -1,11 +1,11 @@
-import express from 'express';
+const express = require('express');
 
-import {
+const {
     GetPokemons,
-} from '../controllers/PokemonController.js';
+} = require('../controllers/PokemonController.js');
 
 const pokemon_router = express.Router();
 
 pokemon_router.get('/', GetPokemons);
 
-export default pokemon_router;
+module.exports = pokemon_router;
