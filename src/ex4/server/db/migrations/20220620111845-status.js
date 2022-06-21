@@ -2,13 +2,13 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {    
-    await queryInterface.addColumn('Items', 'is_pokemon',{
+    await queryInterface.addColumn('Items', 'status',{
       defaultValue: false,
       type: Sequelize.BOOLEAN 
     });
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn('Items', 'is_pokemon');
+    await queryInterface.removeColumn('Items', 'status');
   }
 };
