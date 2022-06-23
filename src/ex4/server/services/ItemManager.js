@@ -1,119 +1,82 @@
 const { GetPokemonById, GetPokemonsByList } = require('./PokemonService.js');
 const StorageService = require('./StorageService.js');
 
-async function ReadTasks() {
- /* try {
-    // get json object
-    const file_read_promise = await file_manager.ReadFromFileTasks();
-    // assing json object to tasks
-    return file_read_promise;
-  } catch (error) {
-    console.log(error);
-  }*/
-}
-
-async function WriteTasks(tasks) {
-  /*try {
-    // set json object to file
-    await file_manager.WriteToFileTasksArray(tasks);
-  } catch (error) {
-    console.log(error);
-  }*/
-}
-
 async function GetTasks() {
   return await StorageService.GetTasks();
 }
 
 async function AddRegularTask(task) {
-  await StorageService.CreateTask({ name: task, id: 'Regular task', completed: false });
+  return await StorageService.CreateTask({ name: task, is_pokemon: false, status: false });
 };
 
-async function AddPokemon(pokemon_id) {
+async function AddPokemon(pokemon_id, pokemon_object = null) {
   try {
-    const tasks = await GetTasks();
-    const pokemon = await GetPokemonById(pokemon_id);
-    InsertPokemon(pokemon, tasks);
-    await WriteTasks(tasks);
+    const pokemon = pokemon_object || await GetPokemonById(pokemon_id);
+    return await StorageService.CreatePokemon({ name: pokemon.name, images: pokemon.images, is_pokemon: true, id: pokemon.id});
   } catch (error) {
-    if (error.response.status === 404) {
-      const err = new Error(`Pokemon with ID ${pokemon_id} was not found`);
-      err.statusCode = 404;
-      throw err;
-    }
-    throw error;
+    ValidateError(error, pokemon_id);
   }
 };
 
 async function AddPokemons(list) {
   try {
-    const tasks = await GetTasks();
     const pokemons = await GetPokemonsByList(list);
     const errors = [];
-    pokemons.forEach((pokemon) => {
+    const added_pokemons = pokemons.map(async (pokemon) => {
       try {
-        InsertPokemon(pokemon, tasks);
+        return await AddPokemon(pokemon.id, pokemon);
       } catch (error) {
         errors.push(error);
       }
     });
+    await Promise.all(added_pokemons);
     if (errors.length)
-      throw errors;
-    await WriteTasks(tasks);
+      throw errors; 
+    return;
   } catch (error) {
     throw error;
   }
 }
 
 async function DeleteTasks() {
-  await WriteTasks([]);
+  await StorageService.DeleteTasks();
 }
 
 async function DeleteTask(task_id) {
-  const tasks = await GetTasks();
-  tasks.splice(task_id, 1);
-  await WriteTasks(tasks);
+  await StorageService.DeleteTask(task_id);
 }
 
 async function CompleteTask(task_id) {
-  const tasks = await GetTasks();
-  tasks[task_id].completed = !tasks[task_id].completed;
-  await WriteTasks(tasks);
+  await StorageService.UpdateTaskStatus(task_id);
 }
 
 async function SortTasksByName() {
-  const tasks = await GetTasks();
-  tasks.sort((a, b) => {
-    // tasks object has name or data for error
-    const item1 = a.name;
-    const item2 = b.name;
-    if (typeof item1 === 'undefined' || typeof item2 === 'undefined')
-      throw new Error('Task is undefined');
-    return item1.toLowerCase().localeCompare(item2.toLowerCase());
-  });
-  await WriteTasks(tasks);
+  return await StorageService.GetTasks('ASC');
 }
 
-function CheckIfPokemonExists(tasks, id) {
-  return tasks.find((task) => task.id === id);
+async function UpdateTask(id, text)
+{ 
+  await StorageService.UpdateTaskText(id, text);
 }
 
-function InsertPokemon(pokemon, tasks) {
-  try {
-    if (!CheckIfPokemonExists(tasks, pokemon.id))
-      tasks.push({ name: pokemon.name, images: pokemon.images, id: pokemon.id, completed: false });
-    else {
-      const error = new Error(`Pokemon Exists with id: ${pokemon.id}`);
-      error.statusCode = 409;
-      throw error;
+function ValidateError(error, pokemon_id)
+{
+  if(error.message === 'Validation error')
+    {
+      const err = new Error(`Pokemon with ID ${pokemon_id} exits in database`);
+      err.statusCode = 409;
+      throw err;
     }
-  }
-  catch (error) {
+    else if (error.response.status === 404) {
+      const err = new Error(`Pokemon with ID ${pokemon_id} was not found`);
+      err.statusCode = 404;
+      throw err;
+    }
     throw error;
-  }
 }
+
 const _isNumber = value => !isNaN(Number(value));
-const _isList = value => value.split(",").every(this._isNumber);
+const _isList = value => value.split(",").every(_isNumber);
 
 const ItemManagerService = {
   GetTasksFromFile: GetTasks,
@@ -124,6 +87,7 @@ const ItemManagerService = {
   DeleteTasks,
   CompleteTask,
   SortTasksByName,
+  UpdateTask,
   _isList,
   _isNumber
 };

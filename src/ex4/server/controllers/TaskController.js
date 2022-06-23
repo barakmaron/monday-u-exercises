@@ -17,14 +17,16 @@ async function AddTask(request, response, next) {
   try {
     const { task } = request.body;
     const pokemon_id = Number.parseInt(task, 10);
+    let task_inserted;
     // check if text has commas and only numbers
-    if (ItemManagerService._isList(task)) {
-      await ItemManagerService.AddPokemons(task);
+    if (task.indexOf(',') > -1 && ItemManagerService._isList(task)) {
+      task_inserted = ItemManagerService.AddPokemons(task);
     } else if (ItemManagerService._isNumber(pokemon_id)) {
-      await ItemManagerService.AddPokemon(pokemon_id);
+      task_inserted = ItemManagerService.AddPokemon(pokemon_id);
     } else { // regular task
-      await ItemManagerService.AddRegularTask(task);
+      task_inserted = ItemManagerService.AddRegularTask(task);
     }
+    await task_inserted;
     return response.status(201).json({
       status: 201,
       task: task
@@ -79,9 +81,27 @@ async function CompleteTask(request, response, next) {
 
 async function SortTasksByName(request, response, next) {
   try {
-    await ItemManagerService.SortTasksByName();
+    const tasks = await ItemManagerService.SortTasksByName();
     return response.status(200).json({
-      status: 200
+      status: 200,
+      tasks: tasks
+    });
+  }
+  catch (error) {
+    next(error);
+  }
+}
+
+async function UpdateTask(request, response, next) {
+  try {
+    const task_id = Number.parseInt(request.params.id, 10);
+    const task = request.body;
+    if (Number.isNaN(task_id))
+      throw ErrorBadRequest();
+    await ItemManagerService.UpdateTask(task_id, task.task_text);
+    return response.status(200).json({
+      status: 200,
+      id: task_id,
     });
   }
   catch (error) {
@@ -102,5 +122,6 @@ module.exports = {
   DeleteTask,
   DeleteTasks,
   CompleteTask,
-  SortTasksByName
+  SortTasksByName,
+  UpdateTask
 };
