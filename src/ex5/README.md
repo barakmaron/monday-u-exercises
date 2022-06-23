@@ -1,3 +1,5 @@
+# My solution
+![](../screenshot.png)
 # Exercise 5 - Sequelize ORM
 
 It is not persisted until you persist it!
@@ -29,14 +31,14 @@ Following pre-requisites were covered in our last workshop.
 
 ### The requirements:
 
-- [ ] Install Sequelize and mysql driver. [Sequelize- Getting Started](https://sequelize.org/docs/v6/getting-started/)
-- [ ] Install Sequelize CLI. [Installing the CLI](https://sequelize.org/docs/v6/other-topics/migrations/)
-- [ ] Initialize Sequelize using `npx sequelize-cli init` inside 'src/server/db' folder 
-- [ ] Create Items table using [Sequelize migration](https://sequelize.org/docs/v6/other-topics/migrations/#creating-the-first-model-and-migration) - a new table with id and ItemName fields
-- [ ] Modify `item_manager.js`: remove items array and modify all item operations to use Item model
-- [ ] Create and run a separate migration for adding a `status` column (BOOLEAN) to Items table in your DB
-- [ ] Add checkbox to each item in UI to indicate its status (Done vs not)
-- [ ] Modify client and server code to support persistence of the new Item status 
+- [X] Install Sequelize and mysql driver. [Sequelize- Getting Started](https://sequelize.org/docs/v6/getting-started/)
+- [X] Install Sequelize CLI. [Installing the CLI](https://sequelize.org/docs/v6/other-topics/migrations/)
+- [X] Initialize Sequelize using `npx sequelize-cli init` inside 'src/server/db' folder 
+- [X] Create Items table using [Sequelize migration](https://sequelize.org/docs/v6/other-topics/migrations/#creating-the-first-model-and-migration) - a new table with id and ItemName fields
+- [X] Modify `item_manager.js`: remove items array and modify all item operations to use Item model
+- [X] Create and run a separate migration for adding a `status` column (BOOLEAN) to Items table in your DB
+- [X] Add checkbox to each item in UI to indicate its status (Done vs not)
+- [X] Modify client and server code to support persistence of the new Item status 
 
 Your todo app should have now an additional checkbox that marks the status of the item. Every change to the checkbox should be stored in our Items table under the status column (true or false)
 
@@ -49,5 +51,5 @@ Here is an example how it can look on the client side:
 
 - [ ] Add "Done" timestamp
 - [ ] Add index to the Items table (which columns compose the index?) 
-- [ ] Add server validation - create a new item only if not exists (Use transaction)
-- [ ] Add edit capabilities to an item. 
+- [X] Add server validation - create a new item only if not exists (Use transaction)
+- [X] Add edit capabilities to an item. 
