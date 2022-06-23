@@ -1,5 +1,5 @@
 # My solution
-![](../screenshot.png)
+![](./screenshot.png)
 # Exercise 5 - Sequelize ORM
 
 It is not persisted until you persist it!
