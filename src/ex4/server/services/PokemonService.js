@@ -29,7 +29,7 @@ function ParsePokemonNamesResponse(response) {
         // split the url attribute to get the id the response contains only name and url no id attribute
         const parsed_url = pokemon.url.split('/').filter((item) => item);
         const id = parsed_url[parsed_url.length - 1];
-        pokemons.push({ name: pokemon.name, id: pokemon.id });
+        pokemons.push({ name: pokemon.name, id: id });
     });
     return pokemons;
 }
