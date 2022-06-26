@@ -97,3 +97,12 @@ Pluse.args = {
   icon: 'plus',
   background_color: 'green'
 };
+
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  size: 'large',
+  label: 'button',
+  background_color: 'primary',
+  disabled: true
+};

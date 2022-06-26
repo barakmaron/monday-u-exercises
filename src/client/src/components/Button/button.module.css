@@ -1,5 +1,5 @@
 
-button 
+.button 
 {
     text-decoration: none;
     text-transform: uppercase;
@@ -11,7 +11,7 @@ button
     transition: all 0.2s linear 0.2s;
 }
 
-button > span 
+.button > span 
 {
     color: #fff;  
 }
@@ -47,18 +47,26 @@ button > span
 }
 
 .red {
-    background-color: #ff7a7a;
+    background: #ff7a7a;
 }
 
 .blue {
-    background-color: #0062d3;
+    background: #0062d3;
 }
 
 .green {
-    background-color: #67d301;   
+    background: #67d301;   
 }
 
 .red:hover, .blue:hover, .green:hover {
     box-shadow: inset #ffffff 0px 0px 10px 0px;
     transition: all 0.2s linear 0.2s;
+}
+
+.button:disabled {
+    background: #787878;
+}
+
+.button:disabled:hover > span {
+    color: #fff;
 }
