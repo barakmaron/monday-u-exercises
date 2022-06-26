@@ -16,7 +16,7 @@ const Template = (args) => <Task {...args} />;
 const item_pokemon = {
   "id": 1,
   "ItemName": "bulbasaur",
-  "status": false,
+  "status": true,
   "is_pokemon": true,
   "createdAt": "2022-06-21T13:04:45.000Z",
   "updatedAt": "2022-06-23T14:46:49.000Z",
