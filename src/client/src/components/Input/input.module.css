@@ -1,0 +1,64 @@
+
+button 
+{
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: all 0.2s linear 0.2s;
+}
+
+button > span 
+{
+    color: #fff;  
+}
+
+.primary
+{
+    background: linear-gradient(37deg, #efa500, #fdb931);
+    transition: all 0.2s linear 0.2s;
+}
+
+.primary:hover
+{
+    background: #efa500;
+}
+
+.primary:hover > span {
+    color: black;
+}
+
+.small {    
+    padding: 10px 15px;
+    font-size: 14px;
+}
+
+.medium {
+    padding: 20px 30px;
+    font-size: 16px;
+}
+
+.large {
+    padding: 20px 45px;
+    font-size: 18px;
+}
+
+.red {
+    background-color: #ff7a7a;
+}
+
+.blue {
+    background-color: #0062d3;
+}
+
+.green {
+    background-color: #67d301;   
+}
+
+.red:hover, .blue:hover, .green:hover {
+    box-shadow: inset #ffffff 0px 0px 10px 0px;
+    transition: all 0.2s linear 0.2s;
+}
