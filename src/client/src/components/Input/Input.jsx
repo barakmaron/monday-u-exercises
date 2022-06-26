@@ -1,39 +1,31 @@
 import React from 'react';
 import PropTypes from  'prop-types';
-import style from './button.module.css';
-import { FaCheck, FaTrashAlt } from 'react-icons/fa';
-import { BsPencil, BsPlusLg } from 'react-icons/bs';
+import style from './input.module.css';
 
-const Button = ({ size, label, icon, background_color, on_click }) => {
-    const icons = {
-        check: <FaCheck></FaCheck>,
-        pencil: <BsPencil></BsPencil>,
-        trash: <FaTrashAlt></FaTrashAlt>,
-        plus: <BsPlusLg></BsPlusLg>
-    };
+const Input = ({ size, label, id, required }) => {
   return (
-    <button
-    type='button'
-    className={`${style[size]} ${style[background_color]}`}
-    onClick={on_click}>
-      <span>{label || icons[icon]}</span>
-    </button>
+    <>
+      <input
+      id={id}
+      type='text'
+      className={`${style.text_input} ${style[size]}`}
+      placeholder=' '
+      required={required}>
+      </input>
+      <label htmlFor={id}>{label}</label>
+    </>
   )
 };
 
-Button.prototype = {
+Input.prototype = {
     size: PropTypes.oneOf(['small', 'medium', 'large']),
-    background_color: PropTypes.oneOf(['primary', 'green', 'blue', 'red']),
-    label: PropTypes.string,
-    icon: PropTypes.oneOf(['check', 'pencil', 'trash', 'plus']),
-    on_click: PropTypes.func
+    id: PropTypes.string,
+    required: PropTypes.bool
 }; 
 
-Button.defaultProps = {
-    background_color: 'primary',
+Input.defaultProps = {
     size: 'medium',
-    onClick: undefined,
-    icon: undefined
+    required: true
 };
 
-export default Button;
+export default Input;
