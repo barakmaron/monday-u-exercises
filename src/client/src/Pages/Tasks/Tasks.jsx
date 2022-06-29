@@ -6,6 +6,7 @@ import { Flex, Toast } from 'monday-ui-react-core';
 import { useTasks } from '../../Hooks/useTasks';
 import { AddNewResourceRequest, DeleteResourceRequest, PatchResourceRequest, PutResourceRequest } from '../../Api/ApiManger';
 import { useError } from '../../Hooks/useError';
+import { useSuccessful } from '../../Hooks/useSuccessful';
 
 
 const Tasks = () => {
@@ -13,12 +14,14 @@ const Tasks = () => {
   const tasks = useTasks(rerender);
   const input_ref = useRef(null);
   const errorHook = useError();
+  const successfulHook = useSuccessful();
 
   async function AddTask() {
     try {
       await AddNewResourceRequest('task', { task: input_ref.current.value });
+      successfulHook.setASuccessful(`New Todo was added`);
       input_ref.current.value = '';
-      setRerender((value) => !value);
+      setRerender((value) => !value);      
     } catch (error) {
       errorHook.setAnError(`Http code ${error.statusCode}: ${error.message}`);
     }
@@ -27,6 +30,7 @@ const Tasks = () => {
   async function DeleteTask(id) {
     try {
       await DeleteResourceRequest(`task/${id}`);
+      successfulHook.setASuccessful(`Todo was deleted successfully`);
       setRerender((value) => !value);
     } catch (error) {
       errorHook.setAnError(`Http code ${error.statusCode}: ${error.message}`);
@@ -36,6 +40,7 @@ const Tasks = () => {
   async function CompleteTask(id) {
     try {
       await PatchResourceRequest(`task/${id}`);
+      successfulHook.setASuccessful(`Todo was set successfully`);
       setRerender((value) => !value);
     } catch (error) {
       errorHook.setAnError(`Http code ${error.statusCode}: ${error.message}`);
@@ -45,6 +50,7 @@ const Tasks = () => {
   async function EditTask(id, data) {
     try {
       await PutResourceRequest(`task/${id}`, data);
+      successfulHook.setASuccessful(`Todo was edited successfully`);
       setRerender((value) => !value);
     } catch (error) {
       errorHook.setAnError(`Http code ${error.statusCode}: ${error.message}`);
@@ -61,10 +67,12 @@ const Tasks = () => {
         tasks={tasks}
         delete_call={DeleteTask}
         complete_call={CompleteTask}
-        edit_call={EditTask}
-        on_error={errorHook.setAnError}></TaskContainer>
-      {errorHook.error && <Toast open type={Toast.types.NEGATIVE} autoHideDuration={5000}>
+        edit_call={EditTask}></TaskContainer>
+      {successfulHook.error && <Toast open type={Toast.types.NEGATIVE} autoHideDuration={5000}>
         {errorHook.message}
+      </Toast>}
+      {successfulHook.successful && <Toast open type={Toast.types.POSITIVE} autoHideDuration={5000}>
+        {successfulHook.message}
       </Toast>}
     </>
   )
