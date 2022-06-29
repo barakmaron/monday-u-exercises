@@ -10,7 +10,7 @@ export default {
   argTypes: {
     size: {
       control: 'radio',
-      options: ['small', 'medium', 'large']
+      options: ['small', 'medium', 'large', 'fit_available']
     }
   },
 };
@@ -32,5 +32,11 @@ Medium.args = {
 export const Small = Template.bind({});
 Small.args = {
   size: 'small',
+  label: 'Input',
+};
+
+export const Fit = Template.bind({});
+Fit.args = {
+  size: 'fit_available',
   label: 'Input',
 };

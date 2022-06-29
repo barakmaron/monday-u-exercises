@@ -1,5 +1,13 @@
+.input_div
+{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 20px 0;
+}
+
 .text_input {
-    font-size: 1em;
     padding: 10px 25px;
     border: 1px solid #FDB931;    
     border-radius: 5px;
@@ -10,8 +18,8 @@
 
 .text_input + label {
     position: absolute;
-    top: 23px;
-    left: 45px;
+    top: 11px;
+    left: 28px;
     color: #a7a7a7;
     transition: all 0.2s linear 0.2s;
 }
@@ -27,7 +35,7 @@
 .text_input:focus + label,
 .text_input:not(:placeholder-shown) + label
 {    
-    top: 23px;
+    top: 2px;
     transition: all 0.2s linear 0.2s;
 }
 
@@ -58,16 +66,37 @@
 }
 
 .small {    
-    width: 150px;
-    font-size: 14px;
+    width: 250px;
+    font-size: 18px;
 }
 
 .medium {
-    width: 200px;
-    font-size: 16px;
+    width: 300px;
+    font-size: 20px;
 }
 
 .large {
-    width: 250px;
+    width: 350px;
+    font-size: 25px;
+}
+
+.fit_available {
+    width: -webkit-fill-available;
+    font-size: 25px;
+}
+
+.small + label {  
     font-size: 18px;
+}
+
+.medium + label {
+    font-size: 20px;
+}
+
+.large + label {
+    font-size: 25px;
+}
+
+.fit_available + label {
+    font-size: 25px;
 }
