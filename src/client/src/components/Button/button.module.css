@@ -24,7 +24,7 @@
 
 .primary:hover
 {
-    background: #efa500;
+    background: linear-gradient(37deg, #ffb000, #ffde9b);
 }
 
 .primary:hover > span {
