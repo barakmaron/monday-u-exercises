@@ -55,3 +55,14 @@
     align-items: center;
     padding: 0 10px;
 }
+
+.edit_task {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit_task > :first-child{
+    margin: 0 5px;
+}
