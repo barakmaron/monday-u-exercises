@@ -25,7 +25,7 @@ const TaskContainer = ({ tasks, delete_call, complete_call, edit_call }) => {
         );
       })}
     </ul>
-  )
+  );
 };
 
 TaskContainer.prototype = {

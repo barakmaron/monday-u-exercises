@@ -1,4 +1,4 @@
-import { React, useRef, useState } from 'react';
+import { React, useRef, useState, useEffect } from 'react';
 import TaskContainer from '../../components/TasksContainer/TaskContainer';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
@@ -7,10 +7,12 @@ import { useTasks } from '../../Hooks/useTasks';
 import { AddNewResourceRequest, DeleteResourceRequest, PatchResourceRequest, PutResourceRequest } from '../../Api/ApiManger';
 import { useError } from '../../Hooks/useError';
 import { useSuccessful } from '../../Hooks/useSuccessful';
+import style from './tasks_page.module.css';
 
 
 const Tasks = () => {
   const [rerender, setRerender] = useState(false);
+  const [pending, setPending] = useState(0);
   const tasks = useTasks(rerender);
   const input_ref = useRef(null);
   const errorHook = useError();
@@ -57,6 +59,13 @@ const Tasks = () => {
     }
   }
 
+  useEffect(() => {
+      const number_of_tasks = tasks.length;
+      const number_of_done_tasks = tasks.filter(task => task.status).length;
+      console.log(number_of_tasks - number_of_done_tasks);
+      setPending(number_of_tasks - number_of_done_tasks);
+  }, [tasks]);
+
   return (
     <>
       <Flex>
@@ -68,6 +77,9 @@ const Tasks = () => {
         delete_call={DeleteTask}
         complete_call={CompleteTask}
         edit_call={EditTask}></TaskContainer>
+      <span className={style.pending_tasks_text}>You have {pending} pending todo's</span>
+      <Button size="large" background_color="red" on_click={()=>{}} label="clear all"></Button>
+      <Button size="large" background_color="primary" on_click={()=>{}} label="sort by name"></Button>
       {successfulHook.error && <Toast open type={Toast.types.NEGATIVE} autoHideDuration={5000}>
         {errorHook.message}
       </Toast>}
