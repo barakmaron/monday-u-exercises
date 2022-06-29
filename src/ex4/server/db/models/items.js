@@ -19,9 +19,11 @@ module.exports = (sequelize, DataTypes) => {
   Items.init({
     ItemName: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
-    is_pokemon: DataTypes.BOOLEAN
+    is_pokemon: DataTypes.BOOLEAN,
+    done: DataTypes.STRING
   }, {
     sequelize,
+    timestamps: true,
     modelName: 'Items',
   });
   return Items;

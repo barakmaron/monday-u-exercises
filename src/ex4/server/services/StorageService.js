@@ -75,7 +75,8 @@ class StorageService {
 
     async UpdateTaskStatus(task_id) {
         await Items.update({
-            'status': Sequelize.literal('NOT status')
+            'status': Sequelize.literal('NOT status'),
+            'done': Sequelize.literal('CURRENT_TIMESTAMP')
         }, {
             where: {
                 'id': task_id
