@@ -64,5 +64,5 @@ export const useStatistics = (setPieCreatedData, setBarPokemonData,setCompleted)
         };
         getStatistics();
         return () => {};
-    }, []);
+    }, [setBarPokemonData, setCompleted, setPieCreatedData]);
 };
