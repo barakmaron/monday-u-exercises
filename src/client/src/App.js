@@ -5,7 +5,8 @@ import {
   Routes,
   Route,
   useNavigate,
-  Navigate
+  Navigate,
+  useLocation
 } from 'react-router-dom';
 
 import Tasks from './Pages/Tasks/Tasks';
@@ -14,6 +15,7 @@ import Statistics from './Pages/Statistics/Statistics';
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   return (   
     <div id={styles.main_container}>
       <Heading
@@ -21,9 +23,12 @@ function App() {
       value={`TODO List`}
       />
       <DialogContentContainer id={styles.container} className={styles.white_box}>
-        <Tab onClick={() => navigate('/tasks')} active>Tasks</Tab>
-        <Tab onClick={() => navigate('/statistics')} >Disabled</Tab>
-        <Tab>Active</Tab>
+        <Tab
+        onClick={() => navigate('/tasks')}
+        active={location.pathname === '/tasks'}>Tasks</Tab>
+        <Tab 
+        onClick={() => navigate('/statistics')} 
+        active={location.pathname === '/statistics'}>statistics</Tab>
         <Routes>
           <Route exact path='/' element={<Navigate to="/tasks" />}></Route>
           <Route exact path='/tasks' element={<Tasks></Tasks>}></Route>
