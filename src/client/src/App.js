@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 
 import Tasks from './Pages/Tasks/Tasks';
-
+import Statistics from './Pages/Statistics/Statistics';
 
 
 function App() {
@@ -22,11 +22,12 @@ function App() {
       />
       <DialogContentContainer id={styles.container} className={styles.white_box}>
         <Tab onClick={() => navigate('/tasks')} active>Tasks</Tab>
-        <Tab onClick={() => navigate('/test')} >Disabled</Tab>
+        <Tab onClick={() => navigate('/statistics')} >Disabled</Tab>
         <Tab>Active</Tab>
         <Routes>
           <Route exact path='/' element={<Navigate to="/tasks" />}></Route>
           <Route exact path='/tasks' element={<Tasks></Tasks>}></Route>
+          <Route exact path='/statistics' element={<Statistics></Statistics>}></Route>
         </Routes> 
       </DialogContentContainer>
     </div>
