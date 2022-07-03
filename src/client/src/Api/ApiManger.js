@@ -4,7 +4,7 @@ import axios from 'axios';
 const base_url = 'http://127.0.0.1:8000';
 export async function GetResourceRequest(url) {
     return await axios.get(`${base_url}/${url}`).then((response) => {
-        return response.data.tasks;
+        return response.data;
     }).catch((error) => {
         throw CreateError(error.response.status, error.response.data.error);
     });
@@ -12,7 +12,7 @@ export async function GetResourceRequest(url) {
   
 export async function AddNewResourceRequest(url, data) {
     return await axios.post(`${base_url}/${url}`, data).then((response) => {
-        return response.data.tasks;
+        return response.data;
     }).catch((error) => {
         throw CreateError(error.response.status, error.response.data.error);
     });
@@ -20,7 +20,7 @@ export async function AddNewResourceRequest(url, data) {
   
 export async function DeleteResourceRequest(url) {
     return await axios.delete(`${base_url}/${url}`).then((response) => {
-        return response.data.tasks;
+        return response.data;
     }).catch((error) => {
         throw CreateError(error.response.status, error.response.data.error);
     });
@@ -28,7 +28,7 @@ export async function DeleteResourceRequest(url) {
   
   export async function PatchResourceRequest(url) {
     return await axios.patch(`${base_url}/${url}`).then((response) => {
-        return response.data.tasks;
+        return response.data;
     }).catch((error) => {
         throw CreateError(error.response.status, error.response.data.error);
     });

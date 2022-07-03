@@ -62,7 +62,6 @@ const Tasks = () => {
   useEffect(() => {
       const number_of_tasks = tasks.length;
       const number_of_done_tasks = tasks.filter(task => task.status).length;
-      console.log(number_of_tasks - number_of_done_tasks);
       setPending(number_of_tasks - number_of_done_tasks);
   }, [tasks]);
 

@@ -8,7 +8,7 @@ export const useTasks = (rerender) => {
         const getTask = async () => {
             const tasks_from_server = await GetResourceRequest('task');
 
-            setTasks(tasks_from_server);
+            setTasks(tasks_from_server.tasks);
         };
         getTask();
     }, [rerender]);
