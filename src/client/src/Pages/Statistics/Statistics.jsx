@@ -9,7 +9,7 @@ import { Chart as ChartJS,
   LinearScale,
   BarElement } from 'chart.js';
 import { Pie, Bar } from 'react-chartjs-2';
-import { Heading } from 'monday-ui-react-core';
+import { Heading, Divider } from 'monday-ui-react-core';
 import StatisticsInitObjects from '../../globals/StatisticsInitObjects';
 import style from './statistics.module.css';
 
@@ -31,17 +31,22 @@ function Statistics() {
 
   const [completed, setCompleted] = useState(StatisticsInitObjects.COMPLETED_OBJECT);
   useStatistics(setPieCreatedData, setBarPokemonData, setCompleted);
-  return ( <>
-      <Heading type={Heading.types.h2} value="Number of todos created in each day" id="created_pie_h2"/>
+  return ( <div className={style.statistics_main_container}>
       <div className={style.statistics_container}>
-        <Pie data={pie_created_data}/>
+        <Heading type={Heading.types.h2} value="Number of todos created in each day" id="created_pie_h2"/>
+        <div >
+          <Pie data={pie_created_data}/>
+        </div>
       </div>
-      <Heading type={Heading.types.h2} value="Number of pokemon vs regular tasks" id="pokemon_bar_h2"/>
       <div className={style.statistics_container}>
-        <Bar data={bar_pokemon_data}/>
+        <Heading type={Heading.types.h2} value="Number of pokemon vs regular tasks" id="pokemon_bar_h2"/>
+        <div>
+          <Bar data={bar_pokemon_data}/>
+        </div>
       </div>
-      <Heading type={Heading.types.h2} value="Completed time statistics" id="completed_h2"/>
+      <Divider direction={Divider.directions.HORIZONTAL} />
       <div className={style.statistics_container}>
+        <Heading type={Heading.types.h2} value="Completed time statistics" id="completed_h2"/>      
         <div>
           <Heading type={Heading.types.h3} value="Max time:" id="max_time_h3"/>
           {completed.max.days} days {completed.max.hours} hours {completed.max.minutes} minuets
@@ -59,7 +64,7 @@ function Statistics() {
           {completed.number_completed} todos
         </div>
       </div>
-  </>);
+  </div>);
 };
 
 export default Statistics;
