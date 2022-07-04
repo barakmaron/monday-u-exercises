@@ -6,8 +6,10 @@ import { store } from './store';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import "monday-ui-react-core/dist/main.css"
+import "monday-ui-react-core/dist/main.css";
+import { fetchTodos } from './reducers/items-entities-reducer';
 
+store.dispatch(fetchTodos);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

@@ -1,4 +1,8 @@
 const ACTIONS = {
+    GET_TASKS: "GET_TASKS",
+    ADD_TASK: "ADD_TASK",
+    DELETE_TASK: "DELETE_TASK",
+    DONE_TASK: "DONE_TASK"
 };
 
 export default ACTIONS;

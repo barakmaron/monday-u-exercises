@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { GetResourceRequest } from "../Api/ApiManger";
+import ApiService from "../Api/ApiManger";
 import { randomColor } from 'randomcolor';
 
 export const useStatistics = (setPieCreatedData, setBarPokemonData,setCompleted) => {
     useEffect(() => {
         const getStatistics = async () => {
-            const created_from_server = await GetResourceRequest('statistics/created');
-            const completed_from_server = await GetResourceRequest('statistics/completed');
-            const pokemons_ratio_from_server = await GetResourceRequest('statistics/pokemon');            
+            const created_from_server = await ApiService.GetResourceRequest('statistics/created');
+            const completed_from_server = await ApiService.GetResourceRequest('statistics/completed');
+            const pokemons_ratio_from_server = await ApiService.GetResourceRequest('statistics/pokemon');            
             setPieCreatedData(() => {
                 const labels = created_from_server.data.map(({date}) => date);
                 const data = created_from_server.data.map(({number_todos}) => number_todos);
