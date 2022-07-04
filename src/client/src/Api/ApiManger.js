@@ -35,22 +35,11 @@ export default class ApiService {
   }
 
   static async PutResourceRequest(url, data) {
-    try {
-      const response = await fetch(`${this.base_url}/${url}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      // check if response is valid
-      if (!response.ok) {
-        throw new Error(`Cant patch ${url}`);
-      }
-      // parse response to json object
-      const res_obj = await response.json();
-      return res_obj;
-    } catch (error) {
-      throw error;
-    }
+    return await axios.put(`${this.base_url}/${url}`, data).then((response) => {
+      return response.data;
+    }).catch((error) => {
+      throw this.CreateError(error.response.status, error.response.data.error);
+    });
   }
 
   static CreateError(code, message) {

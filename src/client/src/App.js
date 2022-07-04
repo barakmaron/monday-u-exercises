@@ -9,8 +9,9 @@ import {
   useLocation
 } from 'react-router-dom';
 
-import Tasks from './Pages/Tasks/Tasks';
+import TasksPage from './Pages/Tasks/TasksPage';
 import Statistics from './Pages/Statistics/Statistics';
+import TasksPageConnector from './Pages/Tasks/TasksPageConnector';
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
         active={location.pathname === '/statistics'}>statistics</Tab>
         <Routes>
           <Route exact path='/' element={<Navigate to="/tasks" />}></Route>
-          <Route exact path='/tasks' element={<Tasks></Tasks>}></Route>
+          <Route exact path='/tasks' element={<TasksPageConnector></TasksPageConnector>}></Route>
           <Route exact path='/statistics' element={<Statistics></Statistics>}></Route>
         </Routes> 
       </DialogContentContainer>

@@ -1,4 +1,4 @@
-import { React, useState, useRef } from 'react';
+import { React, useState, useRef, useCallback } from 'react';
 import PropTypes from  'prop-types';
 import style from './task.module.css';
 import pokemon_style from './task_pokemon.module.css';
@@ -7,16 +7,34 @@ import CheckBox from '../CheckBox/CheckBox';
 import Input from '../Input/Input';
 import { TbArrowWaveRightDown } from 'react-icons/tb';
 
-const Task = ({  number, item, delete_call, complete_call, edit_call }) => {
+const Task = ({  number, item, id, SetCompleteAction, SetDeleteAction, EditAction }) => {
   const [edit, setEdit] = useState(false);
   const edit_input_ref = useRef(null);
 
   const text = item.is_pokemon ? `Catch ${item.ItemName}` : item.ItemName;
 
-  function EditTask() {
-    edit_call(item.id, { task_text: edit_input_ref.current.value });
-    setEdit((value) => !value);
-  }
+  const complete_call = useCallback(
+    () => {
+      SetCompleteAction(id);
+    },
+    [SetCompleteAction]
+  );
+
+  const delete_call = useCallback(
+    () => {
+      SetDeleteAction(id);
+    },
+    [SetDeleteAction]
+  );
+
+  const edit_call = useCallback(
+    () => {
+      EditAction(id, edit_input_ref.current.value);
+      setEdit((value) => !value);
+    },
+    [EditAction]
+  );
+
   return (
     <li id={item.id} className={`${style.todo_task}`}>
       <div className={`${style.checkbox_container}`}>
@@ -36,7 +54,7 @@ const Task = ({  number, item, delete_call, complete_call, edit_call }) => {
           background_color="green" 
           icon="check" 
           size="small"
-          on_click={EditTask}></Button>
+          on_click={edit_call}></Button>
         </div>}
       </div>
       {item.is_pokemon && <div className={pokemon_style.image_sprites}> 
