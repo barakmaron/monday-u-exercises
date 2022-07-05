@@ -6,7 +6,7 @@ export default class ApiService {
     return await axios.get(`${this.base_url}/${url}`).then((response) => {
       return response.data;
     }).catch((error) => {
-      throw this.CreateError(error.response.status, error.response.data.error);
+      throw this.CreateError(error.code, error.message);
     });
   }
 
@@ -14,7 +14,7 @@ export default class ApiService {
     return await axios.post(`${this.base_url}/${url}`, data).then((response) => {
       return response.data;
     }).catch((error) => {
-      throw this.CreateError(error.response.status, error.response.data.error);
+      throw this.CreateError(error.code, error.message);
     });
   }
 
@@ -22,7 +22,7 @@ export default class ApiService {
     return await axios.delete(`${this.base_url}/${url}`).then((response) => {
       return response.data;
     }).catch((error) => {
-      throw this.CreateError(error.response.status, error.response.data.error);
+      throw this.CreateError(error.code, error.message);
     });
   }
 
@@ -30,7 +30,7 @@ export default class ApiService {
     return await axios.patch(`${this.base_url}/${url}`).then((response) => {
       return response.data;
     }).catch((error) => {
-      throw this.CreateError(error.response.status, error.response.data.error);
+      throw this.CreateError(error.code, error.message);
     });
   }
 
@@ -38,7 +38,7 @@ export default class ApiService {
     return await axios.put(`${this.base_url}/${url}`, data).then((response) => {
       return response.data;
     }).catch((error) => {
-      throw this.CreateError(error.response.status, error.response.data.error);
+      throw this.CreateError(error.code, error.message);
     });
   }
 
