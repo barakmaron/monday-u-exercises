@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { useStatistics } from '../../Hooks/useStatustics';
+import { useStatistics } from '../../Hooks/useStatistics';
 import { Chart as ChartJS, 
   ArcElement, 
   Tooltip, 

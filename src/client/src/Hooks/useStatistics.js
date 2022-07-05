@@ -40,8 +40,9 @@ export const useStatistics = (setPieCreatedData, setBarPokemonData,setCompleted)
 
             setCompleted(() => {
                 const max_time = new Date(completed_from_server.data.max_time_complete);
-                const min_time = new Date(completed_from_server.data.min_time_complete);
-                const average_time = new Date(completed_from_server.data.sum_time_complete / completed_from_server.data.number_completed);
+                const min_time = new Date(completed_from_server.data.min_time_complete === 999999999 ? 0 : completed_from_server.data.min_time_complete);
+                const calc_average = completed_from_server.data.sum_time_complete / completed_from_server.data.number_completed;
+                const average_time = new Date(calc_average ? calc_average : 0);
                 return({
                     max: {
                         days: max_time.getUTCDate() - 1,
