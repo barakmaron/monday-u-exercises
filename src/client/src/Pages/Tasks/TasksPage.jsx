@@ -1,14 +1,14 @@
 import { React, useRef, useState, useEffect, useCallback } from 'react';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
-import { Flex, Toast } from 'monday-ui-react-core';
+import { Flex, Toast, Loader } from 'monday-ui-react-core';
 import { useError } from '../../Hooks/useError';
 import { useSuccessful } from '../../Hooks/useSuccessful';
 import style from './tasks_page.module.css';
 import TasksConnector from '../../components/TasksContainer/TaskContainerConnector';
 
 
-const TasksPage = ({ AddAction, ClearAllAction, SortByNameAction }) => {
+const TasksPage = ({ AddAction, ClearAllAction, SortByNameAction, successful, failed, is_loading }) => {
   const [pending, setPending] = useState(0);
   const input_ref = useRef(null);
   const errorHook = useError();
@@ -20,6 +20,16 @@ const TasksPage = ({ AddAction, ClearAllAction, SortByNameAction }) => {
       setPending(number_of_tasks - number_of_done_tasks);
   }, [tasks]);*/
 
+  useEffect(() => {
+    if(successful !== '')
+      successfulHook.setASuccessful(successful);
+  }, [successful])
+
+  useEffect(() => {
+    if(failed !== '')
+      errorHook.setAnError(failed);
+  }, [failed]);
+
   const add_call = useCallback(
     () => {
       AddAction(input_ref.current.value);
@@ -27,6 +37,13 @@ const TasksPage = ({ AddAction, ClearAllAction, SortByNameAction }) => {
     },
     [AddAction]
   );
+
+  const handleEnterPressed = useCallback(event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      add_call();
+    }
+  }, [add_call])
 
   const clear_all_call = useCallback(
     () => {
@@ -39,6 +56,13 @@ const TasksPage = ({ AddAction, ClearAllAction, SortByNameAction }) => {
       SortByNameAction();
     }, [SortByNameAction]
   );
+
+  if(is_loading)
+    return (<div className={style.loader_container}>
+            <div>
+              <Loader value={40} color={Loader.colors.PRIMARY} hasBackground />
+            </div>
+          </div>);
 
   return (
     <>
