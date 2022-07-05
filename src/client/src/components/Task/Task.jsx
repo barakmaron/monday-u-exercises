@@ -17,14 +17,14 @@ const Task = ({  number, item, id, SetCompleteAction, SetDeleteAction, EditActio
     () => {
       SetCompleteAction(id);
     },
-    [SetCompleteAction]
+    [SetCompleteAction, id]
   );
 
   const delete_call = useCallback(
     () => {
       SetDeleteAction(id);
     },
-    [SetDeleteAction]
+    [SetDeleteAction, id]
   );
 
   const edit_call = useCallback(
@@ -32,7 +32,7 @@ const Task = ({  number, item, id, SetCompleteAction, SetDeleteAction, EditActio
       EditAction(id, edit_input_ref.current.value);
       setEdit((value) => !value);
     },
-    [EditAction]
+    [EditAction, id]
   );
 
   return (
