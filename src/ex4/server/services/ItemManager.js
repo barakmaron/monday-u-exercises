@@ -1,4 +1,4 @@
-const { GetPokemonById, GetPokemonsByList } = require('./PokemonService.js');
+const PokemonService = require('./PokemonService.js');
 const StorageService = require('./StorageService.js');
 
 async function GetTasks() {
@@ -11,7 +11,7 @@ async function AddRegularTask(task) {
 
 async function AddPokemon(pokemon_id, pokemon_object = null) {
   try {
-    const pokemon = pokemon_object || await GetPokemonById(pokemon_id);
+    const pokemon = pokemon_object || await PokemonService.GetPokemonById(pokemon_id);
     return await StorageService.CreatePokemon({ name: pokemon.name, images: pokemon.images, is_pokemon: true, id: pokemon.id});
   } catch (error) {
     ValidateError(error, pokemon_id);
@@ -20,7 +20,7 @@ async function AddPokemon(pokemon_id, pokemon_object = null) {
 
 async function AddPokemons(list) {
   try {
-    const pokemons = await GetPokemonsByList(list);
+    const pokemons = await PokemonService.GetPokemonsByList(list);
     const errors = [];
     const added_pokemons = pokemons.map(async (pokemon) => {
       try {

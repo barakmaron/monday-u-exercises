@@ -56,8 +56,10 @@ function FilterPokemonImageAttribute(pokemon_object) {
     return pokemon_filtered;
 }
 
-module.exports = {
+const PokemonService = {
     GetPokemonsNames,
     GetPokemonById,
     GetPokemonsByList
 };
+
+module.exports = PokemonService;
