@@ -1,25 +1,24 @@
 function ErrorHandler(err, req, res, next) {
+    let status = err.statusCode || 500;
     if (err.length) {
         err.forEach(error => {
-            console.log("Received error", error.message);
-            console.log("Stacktrace", error.stack);
+            LogError(error);
         });
-        const status = 409;
-        res.status(status).json({
-            "status": status,
-            "error": `${err}`
-        });
+        status = 409;        
     } else {
-        console.log("Received error", err.message);
-        console.log("Stacktrace", err.stack);
+        LogError(err);
         if (res.headersSent)
-            return next(err);
-        const status = err.statusCode || 500;
-        res.status(status).json({
-            "status": status,
-            "error": `${err.message || "Something went wrong"}`
-        });
+            return next(err);               
     }
+    res.status(status).json({
+        "status": status,
+        "error": `${err || "Something went wrong"}`
+    });
+}
+
+function LogError(error) {
+    console.log("Received error", error.message);
+    console.log("Stacktrace", error.stack);
 }
 
 module.exports = ErrorHandler;
