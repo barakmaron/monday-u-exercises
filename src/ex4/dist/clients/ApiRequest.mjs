@@ -15,6 +15,24 @@ export async function GetResourceRequest(url) {
   }
 }
 
+export async function SendRequest(url, action = "GET", body = null) {
+  try {
+    const response = await fetch(`/${url}`, {
+      method: action,
+      headers: { 'Content-Type': 'application/json' },
+      body: body || ""
+    });
+    if (!response.ok) {
+      throw new Error(`Cant ${action} ${url}`);
+    }
+    return await response.json();
+  }
+  catch (error) {
+    throw (error);
+  }
+}
+
+
 export async function AddNewResourceRequest(url, data) {
   try {
     const response = await fetch(`/${url}`, {
