@@ -1,4 +1,4 @@
-import { React, useState, useRef, useCallback } from 'react';
+import { React, useState, useRef, useCallback, useEffect } from 'react';
 import PropTypes from  'prop-types';
 import style from './task.module.css';
 import pokemon_style from './task_pokemon.module.css';
@@ -7,8 +7,10 @@ import CheckBox from '../CheckBox/CheckBox';
 import Input from '../Input/Input';
 import { TbArrowWaveRightDown } from 'react-icons/tb';
 
-const Task = ({  number, item, id, SetCompleteAction, SetDeleteAction, EditAction }) => {
+const Task = ({  number, item, id, SetCompleteAction, SetDeleteAction, EditAction, search, hide_done }) => {
   const [edit, setEdit] = useState(false);
+  const [render_flag, setRenderFlag] = useState(true);  
+  const [search_flag, setSearch_flag] = useState(true);
   const edit_input_ref = useRef(null);
 
   const text = item.is_pokemon ? `Catch ${item.ItemName}` : item.ItemName;
@@ -35,6 +37,24 @@ const Task = ({  number, item, id, SetCompleteAction, SetDeleteAction, EditActio
     [EditAction, id]
   );
 
+  useEffect(() => {
+    if(text.toLowerCase().indexOf(search) !== -1 )
+      setSearch_flag(true);
+    else if(search === '')
+      setSearch_flag(true);
+    else 
+      setSearch_flag(false);
+  }, [search, text]);
+
+  useEffect(() => {    
+    if(hide_done && item.status)
+      setRenderFlag(false);
+    else
+      setRenderFlag(true);
+  }, [hide_done, item.status]);
+  
+
+  if(search_flag && render_flag)
   return (
     <li id={item.id} className={`${style.todo_task}`}>
       <div className={`${style.checkbox_container}`}>
