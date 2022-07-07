@@ -70,11 +70,12 @@ export async function PatchResourceRequest(url) {
   }
 }
 
-export async function PutResourceRequest(url) {
+export async function PutResourceRequest(url, data) {
   try {
     const response = await fetch(`/${url}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
     });
     // check if response is valid
     if (!response.ok) {

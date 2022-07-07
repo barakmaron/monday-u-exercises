@@ -1,9 +1,9 @@
-import ItemManagerService from "../services/ItemManager.mjs";
+const ItemManagerService = require("../services/ItemManager.js");
 
 /**
 * get all tasks
 */
-export async function GetTasks(request, response) {
+async function GetTasks(request, response) {
   const tasks = await ItemManagerService.GetTasksFromFile();
   return response.status(200).json({
     status: 200,
@@ -13,18 +13,20 @@ export async function GetTasks(request, response) {
 /**
 * add task end point
 */
-export async function AddTask(request, response, next) {
+async function AddTask(request, response, next) {
   try {
     const { task } = request.body;
     const pokemon_id = Number.parseInt(task, 10);
+    let task_inserted;
     // check if text has commas and only numbers
-    if (task.indexOf(',') > -1 && Number.parseInt(task_text.split(',')[0], 10)) {
-      await ItemManagerService.AddPokemons(task);
-    } else if (Number.isInteger(pokemon_id)) { 
-      await ItemManagerService.AddPokemon(pokemon_id);
+    if (task.indexOf(',') > -1 && ItemManagerService._isList(task)) {
+      task_inserted = ItemManagerService.AddPokemons(task);
+    } else if (ItemManagerService._isNumber(pokemon_id)) {
+      task_inserted = ItemManagerService.AddPokemon(pokemon_id);
     } else { // regular task
-      await ItemManagerService.AddRegularTask(task);
+      task_inserted = ItemManagerService.AddRegularTask(task);
     }
+    await task_inserted;
     return response.status(201).json({
       status: 201,
       task: task
@@ -36,7 +38,7 @@ export async function AddTask(request, response, next) {
 /*
 *  delete all task end point
 */
-export async function DeleteTasks(request, response) {
+async function DeleteTasks(request, response) {
   await ItemManagerService.DeleteTasks();
   return response.status(200).json({
     status: 200
@@ -45,10 +47,10 @@ export async function DeleteTasks(request, response) {
 /*
 * delete task end point
 */
-export async function DeleteTask(request, response, next) {
+async function DeleteTask(request, response, next) {
   try {
     const task_id = Number.parseInt(request.params.id, 10);
-    if (Number.isNaN(task_id)) 
+    if (Number.isNaN(task_id))
       throw ErrorBadRequest();
     await ItemManagerService.DeleteTask(task_id);
     return response.status(200).json({
@@ -61,7 +63,7 @@ export async function DeleteTask(request, response, next) {
   }
 }
 
-export async function CompleteTask(request, response, next) {
+async function CompleteTask(request, response, next) {
   try {
     const task_id = Number.parseInt(request.params.id, 10);
     if (Number.isNaN(task_id))
@@ -77,11 +79,12 @@ export async function CompleteTask(request, response, next) {
   }
 }
 
-export async function SortTasksByName(request, response, next) {
+async function SortTasksByName(request, response, next) {
   try {
-    await ItemManagerService.SortTasksByName();
+    const tasks = await ItemManagerService.SortTasksByName();
     return response.status(200).json({
-      status: 200
+      status: 200,
+      tasks: tasks
     });
   }
   catch (error) {
@@ -89,10 +92,36 @@ export async function SortTasksByName(request, response, next) {
   }
 }
 
-function ErrorBadRequest()
-{
+async function UpdateTask(request, response, next) {
+  try {
+    const task_id = Number.parseInt(request.params.id, 10);
+    const task = request.body;
+    if (Number.isNaN(task_id))
+      throw ErrorBadRequest();
+    await ItemManagerService.UpdateTask(task_id, task.task_text);
+    return response.status(200).json({
+      status: 200,
+      id: task_id,
+    });
+  }
+  catch (error) {
+    next(error);
+  }
+}
+
+function ErrorBadRequest() {
   const error = Error();
   error.statusCode = 400;
   error.message = "Wrong parameters";
   return error;
 }
+
+module.exports = {
+  GetTasks,
+  AddTask,
+  DeleteTask,
+  DeleteTasks,
+  CompleteTask,
+  SortTasksByName,
+  UpdateTask
+};

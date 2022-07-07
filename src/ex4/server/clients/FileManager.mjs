@@ -1,5 +1,5 @@
-import fs from 'fs/promises';
-import dotenv from 'dotenv';
+const fs = require('fs/promises');
+const dotenv = require('dotenv');
 
 export default class FileManager {
   constructor() {

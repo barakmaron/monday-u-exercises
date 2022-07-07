@@ -43,7 +43,7 @@ class Main {
      * add button call back function
      */
   async AddButtonCallBack() {
-    const task_text_from_user = this.dom_manager.task_input.value;    
+    const task_text_from_user = this.dom_manager.task_input.value;
     // check if input is not empty
     if (task_text_from_user) {
       this.dom_manager.CreateLoader();
@@ -55,38 +55,38 @@ class Main {
         // wait to get response before re-rendering
         const add_response = await add_promise;
         // status 201 is for created
-        if (add_response.status !== 201) 
+        if (add_response.status !== 201)
           throw add_response.error;
       }
       catch (error) {
         this.ShowError(error);
         this.DestroyError();
-      }
-      this.RerenderFunctionWrapper();
+      }     
       this.dom_manager.DeleteLoader();
+      this.RerenderFunctionWrapper();
     } else {
       this.dom_manager.ShowErrorEmptyTaskInput();
       this.ShowError("Input cant be empty");
       this.DestroyError();
-    } 
+    }
   }
 
   /**
      * removes task from array
      * @param {Event} event click event object
      */
-  async RemoveTodo(event) {    
+  async RemoveTodo(event) {
     const task_id = event.currentTarget.id;
     try {
       this.dom_manager.CreateLoader();
       const delete_promise = Promise.resolve(DeleteResourceRequest(`task/${task_id}`));
       // wait to get response before re-rendering
       await delete_promise;
-      this.dom_manager.DeleteLoader();
     } catch (error) {
       this.ShowError(error);
       this.DestroyError();
     }
+    this.dom_manager.DeleteLoader();
     this.RerenderFunctionWrapper();
   }
 
@@ -101,54 +101,71 @@ class Main {
       const complete_promise = Promise.resolve(PatchResourceRequest(`task/${task_id}`));
       // wait to get response before re-rendering
       await complete_promise;
-      this.dom_manager.DeleteLoader();
     } catch (error) {
       this.ShowError(error);
       this.DestroyError();
     }
+    this.dom_manager.DeleteLoader();
     this.RerenderFunctionWrapper();
   }
+
+  async EditTask(event) {
+    const task_id = event.currentTarget.id;
+    const edit_task_input = event.currentTarget.parentNode.querySelector('#edit_text_input');
+    try {
+      this.dom_manager.CreateLoader();
+      const update_text_promise = Promise.resolve(PutResourceRequest(`task/${task_id}`, { task_text: edit_task_input.value }));
+      // wait to get response before re-rendering
+      await update_text_promise;
+    } catch (error) {
+      this.ShowError(error);
+      this.DestroyError();
+    }
+    this.dom_manager.DeleteLoader();
+    this.RerenderFunctionWrapper();
+  }
+
 
   /**
      * clear all tasks in array and log it to the file
      */
-  async ClearAllTasks() {    
+  async ClearAllTasks() {
     try {
       this.dom_manager.CreateLoader();
       const delete_promise = Promise.resolve(DeleteResourceRequest('task'));
       // wait to get response before re-rendering
       await delete_promise;
-      this.dom_manager.DeleteLoader();
     } catch (error) {
       this.ShowError(error);
       this.DestroyError();
     }
+    this.dom_manager.DeleteLoader();
     this.RerenderFunctionWrapper();
   }
 
   /**
      * sort tasks by name
      */
-  async SortTasksByName() {    
+  async SortTasksByName() {
     try {
       this.dom_manager.CreateLoader();
-      const sort_promise = Promise.resolve(PutResourceRequest('task/sortbyname', {}));
+      const sort_promise = Promise.resolve(GetResourceRequest('task/sortbyname', {}));
       // wait to get response before re-rendering
-      await sort_promise;
-      this.dom_manager.DeleteLoader();
+      const tasks = await sort_promise;
+      this.RerenderFunctionWrapper(tasks);
     } catch (error) {
       this.ShowError(error);
       this.DestroyError();
     }
-    this.RerenderFunctionWrapper();
+    this.dom_manager.DeleteLoader();
   }
 
   /**
      * function to wrap the re-render
      */
-  async RerenderFunctionWrapper() {
+  async RerenderFunctionWrapper(tasks_to_render = null) {
     try {
-      const tasks = await GetResourceRequest('task');
+      const tasks = tasks_to_render || await GetResourceRequest('task');
       //this.tasks = tasks.tasks;
       this.dom_manager.RenderDomFromArray(tasks.tasks, (event) => {
         // delete task call beck
@@ -156,12 +173,15 @@ class Main {
       }, (event) => {
         // complete task call back
         this.CompleteTodo(event);
+      }, (event) => {
+        this.EditTask(event);
       });
     }
     catch (error) {
       this.ShowError(error);
       this.DestroyError();
-    }    
+      this.dom_manager.DeleteLoader();
+    }
   }
 
   async ShowError(error) {
