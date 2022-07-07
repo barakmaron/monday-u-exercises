@@ -1,0 +1,102 @@
+.input_div
+{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.text_input {
+    padding: 10px 25px;
+    border: 1px solid #FDB931;    
+    border-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    transition: all 0.2s linear 0.2s;
+}
+
+.text_input + label {
+    position: absolute;
+    top: 11px;
+    left: 28px;
+    color: #a7a7a7;
+    transition: all 0.2s linear 0.2s;
+}
+
+.text_input:focus,
+.text_input:not(:placeholder-shown)
+{
+    padding-top: 30px;
+    transition: all 0.2s linear 0.2s;
+    box-shadow: #FDB931 -2px 0px 6px 0px;
+}
+
+.text_input:focus + label,
+.text_input:not(:placeholder-shown) + label
+{    
+    top: 2px;
+    transition: all 0.2s linear 0.2s;
+}
+
+.text_input:focus-within,
+.text_input:focus-visible
+{
+    border: 1px solid #FDB931;
+}
+
+.text_input:invalid:focus
+{
+    background: url('../../assets/xicon.svg');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    border-bottom: 5px solid #d30000;
+    box-shadow: #d30000 -2px 0px 6px 0px;
+}
+
+.text_input:valid
+{
+    background: url('../../assets/check-icon.svg');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    border-bottom: 5px solid #66d300;
+    box-shadow: #66d300 -2px 0px 6px 0px;
+}
+
+.small {    
+    width: 250px;
+    font-size: 18px;
+}
+
+.medium {
+    width: 300px;
+    font-size: 20px;
+}
+
+.large {
+    width: 350px;
+    font-size: 25px;
+}
+
+.fit_available {
+    width: -webkit-fill-available;
+    font-size: 25px;
+}
+
+.small + label {  
+    font-size: 18px;
+}
+
+.medium + label {
+    font-size: 20px;
+}
+
+.large + label {
+    font-size: 25px;
+}
+
+.fit_available + label {
+    font-size: 25px;
+}
