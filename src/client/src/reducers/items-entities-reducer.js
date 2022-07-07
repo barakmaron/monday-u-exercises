@@ -1,6 +1,7 @@
 import actionTypes from "../actions/constants";
 import ApiService from '../Api/ApiManger';
 import { getItems } from "../selectors/items-entities-selectors";
+import { Strings } from '../globals/Strings';
 
 const initialState = {
   tasks: [],
@@ -30,7 +31,7 @@ const itemsEntitiesReducer = (state = initialState, action) => {
   }
 };
 
-export function GetTodos() {
+function GetTodos() {
   return async function fetchTodos(dispatch, getState) {
     try {
       dispatch({ type: actionTypes.LOADING, payload: true});
@@ -43,35 +44,35 @@ export function GetTodos() {
   }
 }
 
-export function AddTodo(text) {
+function AddTodo(text) {
   return async function AddTodoThunk(dispatch, getState) {
     try {
       dispatch({ type: actionTypes.LOADING, payload: true});
       const response = await ApiService.AddNewResourceRequest(`task`, { task: text });      
       dispatch({ type: actionTypes.ADD_TASK, payload: response });
       dispatch({ type: actionTypes.LOADING, payload: false});
-      dispatch({ type: actionTypes.SUCCESSFUL, payload: `Added a new todo` });
+      dispatch({ type: actionTypes.SUCCESSFUL, payload: Strings.NewTodoSuccessful });
     } catch (error) {
       dispatch({ type: actionTypes.FAILED, payload: error.message });
     }
   }
 }
 
-export function CompleteTodo(id) {
+function CompleteTodo(id) {
   return async function CompleteTodoThunk(dispatch, getState) {
     try {
       dispatch({ type: actionTypes.LOADING, payload: true});
       const response = await ApiService.PatchResourceRequest(`task/${id}`);      
       dispatch({ type: actionTypes.DONE_TASK, payload: response });
       dispatch({ type: actionTypes.LOADING, payload: false});
-      dispatch({ type: actionTypes.SUCCESSFUL, payload: `Todo with id ${id} is marked todo as done` });
+      dispatch({ type: actionTypes.SUCCESSFUL, payload: Strings.CompleteTodo(id) });
     } catch (error) {
       dispatch({ type: actionTypes.FAILED, payload: error.message });
     }
   }
 }
 
-export function DeleteTodo(id) {
+function DeleteTodo(id) {
   return async function DeleteTodoThunk(dispatch, getState) {
     try {
       dispatch({ type: actionTypes.LOADING, payload: true});
@@ -81,53 +82,63 @@ export function DeleteTodo(id) {
       const response = await ApiService.DeleteResourceRequest(`task/${id}`);
       dispatch({ type: actionTypes.DELETE_TASK, payload: response });
       dispatch({ type: actionTypes.LOADING, payload: false});
-      dispatch({ type: actionTypes.SUCCESSFUL, payload: `Todo with id ${id} was deleted todo` });
+      dispatch({ type: actionTypes.SUCCESSFUL, payload: Strings.DeleteTodo(id) });
     } catch (error) {
       dispatch({ type: actionTypes.FAILED, payload: error.message });
     }
   }
 }
 
-export function EditTodo(id, text) {
+function EditTodo(id, text) {
   return async function EditTodoThunk(dispatch, getState) {
     try {
       dispatch({ type: actionTypes.LOADING, payload: true});
       const response = await ApiService.PutResourceRequest(`task/${id}`, { task_text: text });
       dispatch({ type: actionTypes.EDIT_TASK, payload: response });
       dispatch({ type: actionTypes.LOADING, payload: false});
-      dispatch({ type: actionTypes.SUCCESSFUL, payload: `Edited todo with id ${id}` });
+      dispatch({ type: actionTypes.SUCCESSFUL, payload: Strings.EditTodo(id) });
     } catch (error) {
       dispatch({ type: actionTypes.FAILED, payload: error.message });
     }
   }
 }
 
-export function ClearAll() {
+function ClearAll() {
   return async function ClearAllTodosThunk(dispatch, getState) {
     try {
       dispatch({ type: actionTypes.LOADING, payload: true});
       const response = await ApiService.DeleteResourceRequest(`task`);
       dispatch({ type: actionTypes.CLEAR_ALL, payload: response });
       dispatch({ type: actionTypes.LOADING, payload: false});
-      dispatch({ type: actionTypes.SUCCESSFUL, payload: `Cleared all todos` });
+      dispatch({ type: actionTypes.SUCCESSFUL, payload: Strings.ClearAll });
     } catch (error) {
       dispatch({ type: actionTypes.FAILED, payload: error.message });
     }
   }
 }
 
-export function SortByName() {
+function SortByName() {
   return async function SortByNameThunk(dispatch, getState) {
     try {
       dispatch({ type: actionTypes.LOADING, payload: true});
       const response = await ApiService.GetResourceRequest(`task/sortbyname`);
       dispatch({ type: actionTypes.SORT_BY_NAME, payload: response });
       dispatch({ type: actionTypes.LOADING, payload: false});
-      dispatch({ type: actionTypes.SUCCESSFUL, payload: `Got todos sorted by name` });
+      dispatch({ type: actionTypes.SUCCESSFUL, payload: Strings.SortByName });
     } catch (error) {
       dispatch({ type: actionTypes.FAILED, payload: error.message });
     }
   }
+}
+
+export const ItemsReducers = {
+  GetTodos,
+  AddTodo,
+  CompleteTodo,
+  DeleteTodo,
+  EditTodo,
+  ClearAll,
+  SortByName
 }
 
 

@@ -9,7 +9,6 @@ import {
   useLocation
 } from 'react-router-dom';
 
-import TasksPage from './Pages/Tasks/TasksPage';
 import Statistics from './Pages/Statistics/Statistics';
 import TasksPageConnector from './Pages/Tasks/TasksPageConnector';
 

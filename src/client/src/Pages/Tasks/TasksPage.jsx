@@ -35,16 +35,20 @@ const TasksPage = ({ tasks, AddAction, ClearAllAction, SortByNameAction, success
       errorHook.setAnError(failed);
   }, [failed]);
 
+  const rest_add_input = useCallback(() => {
+    input_ref.current.value = '';
+  }, [input_ref]);
+
   const add_call = useCallback(
     () => {
       if (input_ref.current.value) {
         AddAction(input_ref.current.value);
-        input_ref.current.value = '';
+        rest_add_input();
       }
       else
         FailedAction(`Task cant be empty`);
     },
-    [AddAction, FailedAction]
+    [AddAction, FailedAction, rest_add_input]
   );
 
   const handleEnterPressed = useCallback(event => {

@@ -6,9 +6,10 @@ export const useTasks = (rerender) => {
 
     useEffect(() => {
         const getTask = async () => {
-            const tasks_from_server = await ApiService.GetResourceRequest('task');
-
-            setTasks(tasks_from_server.tasks);
+            if (rerender) {
+                const tasks_from_server = await ApiService.GetResourceRequest('task');
+                setTasks(tasks_from_server.tasks);
+            }
         };
         getTask();
     }, [rerender]);

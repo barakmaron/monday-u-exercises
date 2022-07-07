@@ -1,10 +1,10 @@
-import { React, useState, useEffect, useCallback } from 'react';
+import { React, useState, useEffect } from 'react';
 import PropTypes from  'prop-types';
 import style from './taskcontainer.module.css';
 import { Tooltip, Loader } from 'monday-ui-react-core';
 import TaskConnector from '../Task/TaskConnector';
 
-const TaskContainer = ({ GetTasksAction, itemsEntities }) => {
+const TaskContainer = ({ itemsEntities }) => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 

@@ -1,77 +1,53 @@
-import { CompleteTodo, GetTodos, DeleteTodo, EditTodo, AddTodo, ClearAll, SortByName } from '../reducers/items-entities-reducer';
-
-function SetAdd(task){
-    return AddTodo(task);
-}
-
-function SetDelete(id){
-    return DeleteTodo(id);
-}
-
-function SetComplete(id){
-    return CompleteTodo(id);
-}
-
-function SetEditTodo(id, text) {
-    return EditTodo(id, text);
-}
-
-function SetClearAll(){
-    return ClearAll();
-}
-
-function SetSortByName(){
-    return SortByName();
-}
+import { ItemsReducers } from '../reducers/items-entities-reducer';
 
 export const GetTasksAction = () => {
     return dispatch => {
-        dispatch(GetTodos());
+        dispatch(ItemsReducers.GetTodos());
     };
 }
 
 export const SetCompleteAction = (id) => {
     return dispatch => {
-        Promise.resolve(dispatch(SetComplete(id))).then(() => {
-            dispatch(GetTodos());
+        Promise.resolve(dispatch(ItemsReducers.CompleteTodo(id))).then(() => {
+            dispatch(ItemsReducers.GetTodos());
         })
     };
 }
 
 export const SetDeleteAction = (id) => {
     return dispatch => {
-        Promise.resolve(dispatch(SetDelete(id))).then(() => {
-            dispatch(GetTodos());
+        Promise.resolve(dispatch(ItemsReducers.DeleteTodo(id))).then(() => {
+            dispatch(ItemsReducers.GetTodos());
         });
     };
 }
 
 export const EditAction = (id, text) => {
     return dispatch => {
-        Promise.resolve(dispatch(SetEditTodo(id, text))).then(() => {
-            dispatch(GetTodos());
+        Promise.resolve(dispatch(ItemsReducers.EditTodo(id, text))).then(() => {
+            dispatch(ItemsReducers.GetTodos());
         });
     }
 }
 
 export const AddAction = (task) => {
     return dispatch => {
-        Promise.resolve(dispatch(SetAdd(task))).then(() => {
-            dispatch(GetTodos());
+        Promise.resolve(dispatch(ItemsReducers.AddTodo(task))).then(() => {
+            dispatch(ItemsReducers.GetTodos());
         });
     }
 }
 
 export const ClearAllAction = () => {
     return dispatch => {
-        Promise.resolve(dispatch(SetClearAll())).then(() => {
-            dispatch(GetTodos());
+        Promise.resolve(dispatch(ItemsReducers.ClearAll())).then(() => {
+            dispatch(ItemsReducers.GetTodos());
         });
     }
 }
 
 export const SortByNameAction = () => {
     return dispatch => {
-       dispatch(SetSortByName());
+       dispatch(ItemsReducers.SortByName());
     }
 }
