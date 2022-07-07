@@ -1,9 +1,12 @@
 /* eslint-disable camelcase */
 const axios = require('axios');
+const path = require('path');
+const dotenv = require('dotenv');
 class PokemonClient {
   constructor() {
-    this.base_url = 'https://pokeapi.co/api/v2/pokemon/';
-    this.pokemons_url = 'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0';    
+    dotenv.config({ path: path.resolve(__dirname, '../config/.env') });
+    this.base_url = process.env.POKEMON_BASE_URL;
+    this.pokemons_url = process.env.POKEMON_NAMES_URL;    
   }
   
   /**

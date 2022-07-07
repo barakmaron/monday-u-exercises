@@ -99,6 +99,14 @@ Pluse.args = {
 };
 
 
+export const Search = Template.bind({});
+Search.args = {
+  size: 'small',
+  icon: 'search',
+  background_color: 'blue'
+};
+
+
 export const Disabled = Template.bind({});
 Disabled.args = {
   size: 'large',

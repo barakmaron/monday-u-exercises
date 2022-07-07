@@ -156,14 +156,14 @@ export default class DomManager {
     return temp.content.firstChild;
   }
 
-  CreateLoader()
+  ShowLoader()
   {
     const main_container = document.querySelector('#main_container');
     const loader = this.CreateElementFromHtml(LOADER);
     main_container.appendChild(loader);
   }
 
-  DeleteLoader()
+  HideLoader()
   {
     const loader = document.querySelector('.spinner_container');
     loader.remove();
@@ -177,7 +177,7 @@ export default class DomManager {
     main_container.appendChild(error);
   }
 
-  DestroyErrorElement()
+  HideErrorElement()
   {
     const error = document.querySelector('.error');
     error.remove();
