@@ -1,10 +1,21 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import PropTypes from  'prop-types';
-import Task from '../Task/Task';
 import style from './taskcontainer.module.css';
-import { Tooltip } from 'monday-ui-react-core';
+import { Tooltip, Loader } from 'monday-ui-react-core';
+import TaskConnector from '../Task/TaskConnector';
 
-const TaskContainer = ({ tasks, delete_call, complete_call, edit_call }) => {
+const TaskContainer = ({ itemsEntities }) => {
+  const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {    
+    setIsLoading(true);
+    setTasks(itemsEntities);
+    setIsLoading(false);
+  }, [itemsEntities]);
+
+  if(isLoading)
+    return <Loader size={40} />;
   return (
     <ul id={style.todo_tasks_container} className={tasks.length ? undefined : style.empty}>
       {tasks.map((task, index) => {
@@ -14,13 +25,11 @@ const TaskContainer = ({ tasks, delete_call, complete_call, edit_call }) => {
             key={`task_id${task.id}tooltip`}
             immediateShowDelay={0} 
             content={content}>
-            <Task
+            <TaskConnector
             key={`task_id${task.id}`}
             number={index + 1}
             item={task}
-            delete_call={() => delete_call(task.id)}
-            complete_call={() => complete_call(task.id)}
-            edit_call={edit_call}></Task>
+            id={task.id}></TaskConnector>
           </Tooltip>
         );
       })}

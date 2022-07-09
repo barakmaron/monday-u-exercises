@@ -4,6 +4,7 @@ const compression = require('compression');
 const ErrorHandler = require('./server/middleware/ErrorHandler.js');
 const task_router = require('./server/routes/task.js');
 const pokemon_router = require('./server/routes/pokemon.js');
+const statistics_route = require('./server/routes/statistics.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -17,6 +18,8 @@ app.use([cors(), morgan("common"), compression(), express.json()]);
 app.use('/task', task_router);
 
 app.use('/pokemon', pokemon_router);
+
+app.use('/statistics', statistics_route);
 
 app.use(ErrorHandler);
 

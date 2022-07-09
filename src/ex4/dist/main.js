@@ -53,10 +53,7 @@ class Main {
         // send the task to item manager      
         const add_promise = Promise.resolve(AddNewResourceRequest('task', { task: task_text_from_user }));
         // wait to get response before re-rendering
-        const add_response = await add_promise;
-        // status 201 is for created
-        if (add_response.status !== 201)
-          throw add_response.error;
+        await add_promise;
       }
       catch (error) {
         this.ShowError(error);

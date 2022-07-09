@@ -1,61 +1,52 @@
 import axios from 'axios';
-
-
-const base_url = 'http://127.0.0.1:8000';
-export async function GetResourceRequest(url) {
-    return await axios.get(`${base_url}/${url}`).then((response) => {
-        return response.data.tasks;
-    }).catch((error) => {
-        throw CreateError(error.response.status, error.response.data.error);
-    });
+export default class ApiService {
+  static BaseUrl(){    
+    return process.env.REACT_APP_SERVER_BASE_URL;
   }
   
-export async function AddNewResourceRequest(url, data) {
-    return await axios.post(`${base_url}/${url}`, data).then((response) => {
-        return response.data.tasks;
+  static async GetResourceRequest(url) {    
+    return await axios.get(`${this.BaseUrl()}/${url}`).then((response) => {
+      return response.data;
     }).catch((error) => {
-        throw CreateError(error.response.status, error.response.data.error);
+      throw this.CreateError(error.code, error.message);
     });
-}
-  
-export async function DeleteResourceRequest(url) {
-    return await axios.delete(`${base_url}/${url}`).then((response) => {
-        return response.data.tasks;
-    }).catch((error) => {
-        throw CreateError(error.response.status, error.response.data.error);
-    });
-}
-  
-  export async function PatchResourceRequest(url) {
-    return await axios.patch(`${base_url}/${url}`).then((response) => {
-        return response.data.tasks;
-    }).catch((error) => {
-        throw CreateError(error.response.status, error.response.data.error);
-    });
-  }
-  
-  export async function PutResourceRequest(url, data) {
-    try {
-      const response = await fetch(`${base_url}/${url}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      // check if response is valid
-      if (!response.ok) {
-        throw new Error(`Cant patch ${url}`);
-      }
-      // parse response to json object
-      const res_obj = await response.json();
-      return res_obj;
-    } catch (error) {
-      throw error;
-    }
   }
 
-  function CreateError(code, message)
-  {
+  static async AddNewResourceRequest(url, data) {
+    return await axios.post(`${this.BaseUrl()}/${url}`, data).then((response) => {
+      return response.data;
+    }).catch((error) => {
+      throw this.CreateError(error.code, error.message);
+    });
+  }
+
+  static async DeleteResourceRequest(url) {
+    return await axios.delete(`${this.BaseUrl()}/${url}`).then((response) => {
+      return response.data;
+    }).catch((error) => {
+      throw this.CreateError(error.code, error.message);
+    });
+  }
+
+  static async PatchResourceRequest(url) {
+    return await axios.patch(`${this.BaseUrl()}/${url}`).then((response) => {
+      return response.data;
+    }).catch((error) => {
+      throw this.CreateError(error.code, error.message);
+    });
+  }
+
+  static async PutResourceRequest(url, data) {
+    return await axios.put(`${this.BaseUrl()}/${url}`, data).then((response) => {
+      return response.data;
+    }).catch((error) => {
+      throw this.CreateError(error.code, error.message);
+    });
+  }
+
+  static CreateError(code, message) {
     const error = new Error(message);
     error.statusCode = code;
     return error;
   }
+}

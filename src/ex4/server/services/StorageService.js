@@ -7,7 +7,7 @@ class StorageService {
         let order_by = ['ItemName', order];
         if (!order) {
             order_by = ['id', 'ASC'];
-        } 
+        }
         return await Items.findAll({
             include: {
                 all: true,
@@ -41,15 +41,33 @@ class StorageService {
     }
 
     async DeleteTask(task_id) {
+        const task = await Items.findOne({
+            where: {
+                'id': task_id
+            }
+        });
         await Items.destroy({
             where: {
                 'id': task_id
-            },
-            include: {
-                all: true,
-                nested: true
             }
         });
+        if (task.is_pokemon) {
+            const pokemon = await PokemonData.findOne({
+                where: {
+                    'items_id': task_id
+                }
+            });
+            await PokemonData.destroy({
+                where: {
+                    'items_id': task_id
+                }
+            })
+            await PokemonImages.destroy({
+                where: {
+                    'pokemon_id': pokemon.pokemon_id
+                }
+            });
+        }
     }
 
     async DeleteTasks() {
@@ -90,7 +108,9 @@ class StorageService {
         }, {
             where: {
                 'id': task_id
-            }
+            },
+            returning: true,
+            plain: true
         });
     }
 }
