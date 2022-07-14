@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render snapshot of StatisticsPage 1`] = `
+<div
+  className="statistics_main_container"
+>
+  <div
+    className="statistics_container"
+  >
+    <h2
+      aria-label=""
+      className="heading-component element-type-h2 size-large single-line-ellipsis"
+      id="created_pie_h2"
+    >
+      Number of todos created in each day
+    </h2>
+    <div>
+      <canvas
+        height={150}
+        role="img"
+        width={300}
+      />
+    </div>
+  </div>
+  <div
+    className="statistics_container"
+  >
+    <h2
+      aria-label=""
+      className="heading-component element-type-h2 size-large single-line-ellipsis"
+      id="pokemon_bar_h2"
+    >
+      Number of pokemon vs regular tasks
+    </h2>
+    <div>
+      <canvas
+        height={150}
+        role="img"
+        width={300}
+      />
+    </div>
+  </div>
+  <div
+    className="monday-style-divider monday-style-divider--horizontal"
+  />
+  <div
+    className="statistics_container"
+  >
+    <h2
+      aria-label=""
+      className="heading-component element-type-h2 size-large single-line-ellipsis"
+      id="completed_h2"
+    >
+      Completed time statistics
+    </h2>
+    <div>
+      <h3
+        aria-label=""
+        className="heading-component element-type-h3 size-large single-line-ellipsis"
+        id="max_time_h3"
+      >
+        Max time:
+      </h3>
+      0
+       days 
+      0
+       hours 
+      0
+       minuets
+    </div>
+    <div>
+      <h3
+        aria-label=""
+        className="heading-component element-type-h3 size-large single-line-ellipsis"
+        id="Min_time_h3"
+      >
+        Min time:
+      </h3>
+      0
+       days 
+      0
+       hours 
+      0
+       minuets
+    </div>
+    <div>
+      <h3
+        aria-label=""
+        className="heading-component element-type-h3 size-large single-line-ellipsis"
+        id="max_time_h3"
+      >
+        Average time:
+      </h3>
+      0
+       days 
+      0
+       hours 
+      0
+       minuets
+    </div>
+    <div>
+      <h3
+        aria-label=""
+        className="heading-component element-type-h3 size-large single-line-ellipsis"
+        id="number_completed_h3"
+      >
+        Number of completed todos:
+      </h3>
+      0
+       todos
+    </div>
+  </div>
+</div>
+`;
