@@ -36,7 +36,7 @@ process.on('uncaughtException', (error) => {
     process.exit(1);
 });
 
-const server = app.listen(8080, () => {
+const server = app.listen(process.env.PORT || 3000, () => {
     const { address, port } = server.address();
     console.log('Express app listening at http://%s:%s', address, port);
 });
