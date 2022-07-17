@@ -7,11 +7,12 @@ const pokemon_router = require('./server/routes/pokemon.js');
 const statistics_route = require('./server/routes/statistics.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { sequelize } = require('sequelize');
+const db = require('./server/db/models');
 
 const app = express();
 
-sequelize.sync();
+Promise.resolve(db.sequelize.sync({ force: true }));
+console.log("All models were synchronized successfully.");
 
 // middleware
 app.use(bodyParser.json());
