@@ -92,7 +92,7 @@ const TasksPage = ({ tasks, AddAction, ClearAllAction, SortByNameAction, success
 
   const restore_call_back = useCallback(
     () => {
-      if (deleted.length) {
+      if (deleted !== {}) {
         const todo_value_to_add = deleted.is_pokemon ? deleted.PokemonDatum.pokemon_id : deleted.ItemName;
         AddAction(todo_value_to_add.toString());
       }

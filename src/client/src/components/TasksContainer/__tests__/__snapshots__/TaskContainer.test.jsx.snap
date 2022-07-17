@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render snapshot of TaskContainer 1`] = `
+<ul
+  className="empty"
+  id="todo_tasks_container"
+/>
+`;
