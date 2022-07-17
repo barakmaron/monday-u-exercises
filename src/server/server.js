@@ -8,17 +8,25 @@ const statistics_route = require('./server/routes/statistics.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./server/db/models');
+const path = require('path');
 
 const app = express();
 
 Promise.resolve(db.sequelize.sync({ force: true }));
-console.log("All models were synchronized successfully.");
 
 // middleware
-app.use(bodyParser.json());
-app.use([cors(), morgan("common"), compression(), express.json()]);
+const corsOptions = {
+    origin: '*',
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", 
+  };
+app.use([cors(corsOptions), morgan("common"), compression(), express.json()]);
 
-app.use(express.static("/public"))
+app.use(bodyParser.json());
+
+app.use('/static', express.static(path.join(__dirname, './server/public/static')));
+app.get('*', function(req, res) {
+  res.sendFile('index.html', {root: path.join(__dirname, './server/public/')});
+});
 
 app.use('/task', task_router);
 
