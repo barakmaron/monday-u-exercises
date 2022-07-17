@@ -13,18 +13,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Development Code
+      - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Use Node.js 17.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 17.x
-      - run: npm install
-      - run: npm run build --if-present
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: 'barak-maron-todo-list-server'
-          heroku_email: 'barak062@gmail.com'
-          usedocker: true
+      - name: Heroku login container
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run:  heroku container:login
+      - name: Build and push
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:push -a barak-maron-todo-list-server web
+      - name: Deploy
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release -a barak-maron-todo-list-server web
