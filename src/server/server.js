@@ -17,7 +17,8 @@ console.log("All models were synchronized successfully.");
 // middleware
 app.use(bodyParser.json());
 app.use([cors(), morgan("common"), compression(), express.json()]);
-app.use(express.static("public"))
+
+app.use(express.static("/public"))
 
 app.use('/task', task_router);
 
