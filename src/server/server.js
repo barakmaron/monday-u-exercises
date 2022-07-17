@@ -32,9 +32,9 @@ app.use('/pokemon', pokemon_router);
 
 app.use('/statistics', statistics_route);
 
-app.use('/static', express.static(path.join(__dirname, './server/public/static')));
+app.use('/static', express.static(path.join(__dirname, '../client/build/static')));
 app.get('*', function(req, res) {
-  res.sendFile('index.html', {root: path.join(__dirname, './server/public/')});
+  res.sendFile('index.html', {root: path.join(__dirname, '../client/build/')});
 });
 
 

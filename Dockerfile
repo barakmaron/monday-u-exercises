@@ -1,4 +1,10 @@
 FROM node:17-alpine
+WORKDIR /client
+
+COPY ./src/client .
+
+RUN npm install
+RUN npm run build
 
 WORKDIR /app
 
