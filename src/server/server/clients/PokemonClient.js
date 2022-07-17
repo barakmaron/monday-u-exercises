@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 class PokemonClient {
   constructor() {
     dotenv.config({ path: path.resolve(__dirname, '../config/.env') });
-    this.base_url = process.env.POKEMON_BASE_URL;
+    this.base_url = process.env.POKEMON_BASE_URL || 'https://pokeapi.co/api/v2/pokemon/';
     this.pokemons_url = process.env.POKEMON_NAMES_URL;    
   }
   
