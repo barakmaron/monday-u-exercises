@@ -15,7 +15,6 @@ class PokemonClient {
   * @returns {string} parsed result from api
   */
   async FetchRequestById(id) {
-    console.log(this.base_url, this.pokemons_url)
     return axios.get(this.base_url.concat(id)).then((response) => {     
      return response.data;
     });
