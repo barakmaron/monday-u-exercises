@@ -1,10 +1,13 @@
 import axios from 'axios';
+
 export default class ApiService {
   static BaseUrl(){    
     return process.env.REACT_APP_SERVER_BASE_URL;
   }
   
   static async GetResourceRequest(url) {    
+    axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     return await axios.get(`${this.BaseUrl()}/${url}`).then((response) => {
       return response.data;
     }).catch((error) => {

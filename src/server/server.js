@@ -15,11 +15,13 @@ const app = express();
 Promise.resolve(db.sequelize.sync({ force: true }));
 
 // middleware
-const corsOptions = {
-    origin: '*',
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", 
-  };
-app.use([cors({ origin: false }), morgan("common"), compression(), express.json()]);
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "https://barak-maron-todo-list-server.herokuapp.com/"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
+app.use([morgan("common"), compression(), express.json()]);
 
 app.use(bodyParser.json());
 
