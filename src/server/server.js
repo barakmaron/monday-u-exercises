@@ -19,7 +19,6 @@ app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "true"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    console.log('1111111111111111111111');
     next();
   });
 
