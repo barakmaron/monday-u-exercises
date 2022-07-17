@@ -14,7 +14,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use([cors(), morgan("common"), compression(), express.json()]);
 
-
 app.use('/task', task_router);
 
 app.use('/pokemon', pokemon_router);
