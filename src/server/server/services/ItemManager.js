@@ -11,10 +11,8 @@ async function AddRegularTask(task) {
 
 async function AddPokemon(pokemon_id, pokemon_object = null) {
   try {
-    const pokemon = pokemon_object || await PokemonService.GetPokemonById(pokemon_id);
-    console.log(pokemon);
+    const pokemon = pokemon_object ? await PokemonService.GetPokemonById(pokemon_id) : pokemon_object;
     const ret = await StorageService.CreatePokemon({ name: pokemon.name, images: pokemon.images, is_pokemon: true, id: pokemon.id, status: false});
-    console.log(ret);
   } catch (error) {
     ValidateError(error, pokemon_id);
   }
