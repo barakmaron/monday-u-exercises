@@ -46,29 +46,29 @@ class StorageService {
             where: {
                 'id': task_id
             }
-        });
-        await Items.destroy({
-            where: {
-                'id': task_id
-            }
-        });
+        });       
         if (task.is_pokemon) {
             const pokemon = await PokemonData.findOne({
                 where: {
                     'items_id': task_id
+                }
+            });            
+            await PokemonImages.destroy({
+                where: {
+                    'pokemon_id': pokemon.pokemon_id
                 }
             });
             await PokemonData.destroy({
                 where: {
                     'items_id': task_id
                 }
-            })
-            await PokemonImages.destroy({
-                where: {
-                    'pokemon_id': pokemon.pokemon_id
-                }
             });
         }
+        await Items.destroy({
+            where: {
+                'id': task_id
+            }
+        });
     }
 
     async DeleteTasks() {
