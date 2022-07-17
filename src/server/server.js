@@ -15,9 +15,11 @@ const app = express();
 Promise.resolve(db.sequelize.sync({ force: true }));
 
 // middleware
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "https://barak-maron-todo-list-server.herokuapp.com/"); // update to match the domain you will make the request from
+app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "true"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    console.log('1111111111111111111111');
     next();
   });
 
@@ -25,16 +27,17 @@ app.use([morgan("common"), compression(), express.json()]);
 
 app.use(bodyParser.json());
 
-app.use('/static', express.static(path.join(__dirname, './server/public/static')));
-app.get('*', function(req, res) {
-  res.sendFile('index.html', {root: path.join(__dirname, './server/public/')});
-});
-
 app.use('/task', task_router);
 
 app.use('/pokemon', pokemon_router);
 
 app.use('/statistics', statistics_route);
+
+app.use('/static', express.static(path.join(__dirname, './server/public/static')));
+app.get('*', function(req, res) {
+  res.sendFile('index.html', {root: path.join(__dirname, './server/public/')});
+});
+
 
 app.use(ErrorHandler);
 

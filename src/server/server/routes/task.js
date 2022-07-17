@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { checkSchema } = require('express-validator');
 const {
     GetTasks,
