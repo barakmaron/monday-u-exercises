@@ -7,8 +7,11 @@ const pokemon_router = require('./server/routes/pokemon.js');
 const statistics_route = require('./server/routes/statistics.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { sequelize } = require('sequelize');
 
 const app = express();
+
+sequelize.sync();
 
 // middleware
 app.use(bodyParser.json());
@@ -32,7 +35,7 @@ process.on('uncaughtException', (error) => {
     process.exit(1);
 });
 
-const server = app.listen(8000, () => {
+const server = app.listen(8080, () => {
     const { address, port } = server.address();
     console.log('Express app listening at http://%s:%s', address, port);
 });
