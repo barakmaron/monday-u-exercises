@@ -19,7 +19,7 @@ const corsOptions = {
     origin: '*',
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE", 
   };
-app.use([cors(corsOptions), morgan("common"), compression(), express.json()]);
+app.use([cors({ origin: false }), morgan("common"), compression(), express.json()]);
 
 app.use(bodyParser.json());
 
