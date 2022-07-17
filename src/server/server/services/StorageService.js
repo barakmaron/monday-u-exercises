@@ -81,7 +81,7 @@ class StorageService {
     async CreatePokemon(pokemon) {
         const t = await sequelize.transaction()
         try {
-            const item = await this.CreateTask({ name: pokemon.name, is_pokemon: true, status: false}, t);
+            const item = await this.CreateTask({ name: pokemon.name, is_pokemon: true, status: false }, t);
             const pokemon_data = await this.CreatePokemonData({ item_id: item.id, pokemon_id: pokemon.id }, t);
             const pokemon_images = await this.CreatePokemonImages({ id: pokemon_data.id, images: pokemon.images }, t);
             await t.commit();
