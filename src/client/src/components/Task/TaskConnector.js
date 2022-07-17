@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { SetCompleteAction, SetDeleteAction, EditAction } from '../../actions/ItemsActions';
+import ItemsActions from '../../actions/ItemsActions';
 import { getSearch, getHideDone } from '../../selectors/items-view-selectors';
 import Task from './Task';
 
@@ -11,6 +11,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+    const SetCompleteAction = ItemsActions.SetCompleteAction;
+    const SetDeleteAction = ItemsActions.SetDeleteAction;
+    const EditAction = ItemsActions.EditAction;
     return bindActionCreators({ SetCompleteAction, SetDeleteAction, EditAction }, dispatch);
 };
 

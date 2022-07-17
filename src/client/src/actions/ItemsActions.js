@@ -104,13 +104,13 @@ export function GetTodos() {
   }
   
   
-export const GetTasksAction = () => {
+const GetTasksAction = () => {
     return dispatch => {
         dispatch(GetTodos());
     };
 }
 
-export const SetCompleteAction = (id) => {
+const SetCompleteAction = (id) => {
     return dispatch => {
         Promise.resolve(dispatch(CompleteTodo(id))).then(() => {
             dispatch(GetTodos());
@@ -118,7 +118,7 @@ export const SetCompleteAction = (id) => {
     };
 }
 
-export const SetDeleteAction = (id) => {
+const SetDeleteAction = (id) => {
     return dispatch => {
         Promise.resolve(dispatch(DeleteTodo(id))).then(() => {
             dispatch(GetTodos());
@@ -126,7 +126,7 @@ export const SetDeleteAction = (id) => {
     };
 }
 
-export const EditAction = (id, text) => {
+const EditAction = (id, text) => {
     return dispatch => {
         Promise.resolve(dispatch(EditTodo(id, text))).then(() => {
             dispatch(GetTodos());
@@ -134,7 +134,7 @@ export const EditAction = (id, text) => {
     }
 }
 
-export const AddAction = (task) => {
+const AddAction = (task) => {
     return dispatch => {
         Promise.resolve(dispatch(AddTodo(task))).then(() => {
             dispatch(GetTodos());
@@ -142,7 +142,7 @@ export const AddAction = (task) => {
     }
 }
 
-export const ClearAllAction = () => {
+const ClearAllAction = () => {
     return dispatch => {
         Promise.resolve(dispatch(ClearAll())).then(() => {
             dispatch(GetTodos());
@@ -150,8 +150,22 @@ export const ClearAllAction = () => {
     }
 }
 
-export const SortByNameAction = () => {
+const SortByNameAction = () => {
     return dispatch => {
        dispatch(SortByName());
     }
 }
+
+
+const ItemsActions = {
+  GetTodos,
+  GetTasksAction,
+  SetCompleteAction,
+  SetDeleteAction,
+  EditAction,
+  AddAction,
+  ClearAllAction,
+  SortByNameAction
+};
+
+export default ItemsActions;

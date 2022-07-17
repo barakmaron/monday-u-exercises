@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AddAction, ClearAllAction, SortByNameAction } from '../../actions/ItemsActions';
+import ItemsActions from '../../actions/ItemsActions';
 import { FailedAction, SearchAction, HideDoneAction } from '../../actions/ViewActions';
 import { getItems, getLastDeleted } from '../../selectors/items-entities-selectors';
 import { getSuccessful, getFailed, getLoading } from '../../selectors/items-view-selectors';
@@ -16,6 +16,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+    const AddAction = ItemsActions.AddAction;
+    const ClearAllAction = ItemsActions.ClearAllAction;
+    const SortByNameAction = ItemsActions.SortByNameAction;    
     return bindActionCreators({ AddAction, ClearAllAction, SortByNameAction, FailedAction, SearchAction, HideDoneAction }, dispatch);
 };
 

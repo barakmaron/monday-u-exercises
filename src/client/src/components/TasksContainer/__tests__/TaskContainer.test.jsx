@@ -3,7 +3,7 @@ import TaskContainer from '../TaskContainer';
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { store } from "../../../store";
-import actionTypes from '../../../actions/constants/index';
+import ItemsActions from '../../../actions/ItemsActions';
 import TaskContainerConnector from '../TaskContainerConnector';
 
 it('Render snapshot of TaskContainer', () => {
@@ -37,15 +37,10 @@ describe("ListContainer", () => {
 
 describe("ListContainer with mock GetTodos", () => {
     const mock_get_todos = jest.fn(() => items);
-    const mock_get_todos_action = { type: actionTypes.GET_TASKS, payload: { tasks: mock_get_todos() } };
+    const mock_get_todos_action = jest.spyOn(ItemsActions, 'GetTodos').mockImplementation(mock_get_todos);
     test("should render both items (one done and one not) with mock get tasks", () => {
-        store.dispatch(mock_get_todos_action);
-        const { asFragment } = render(
-            <Provider store={store}>
-                <TaskContainerConnector></TaskContainerConnector>
-            </Provider>
-        );
-        itemsCheckedTestCase(asFragment);
+        ItemsActions.GetTodos();
+        expect(mock_get_todos_action).toBeCalled();
     });
 });
 
