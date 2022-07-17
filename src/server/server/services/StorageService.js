@@ -72,9 +72,15 @@ class StorageService {
     }
 
     async DeleteTasks() {
-        const items_delete = Items.destroy({ truncate: true });
-        const pokemon_data = PokemonData.destroy({ truncate: true });
-        const pokemon_images = PokemonImages.destroy({ truncate: true });
+        await PokemonImages.sequelize.query("SET FOREIGN_KEY_CHECKS = 0", null);
+        const pokemon_images = await PokemonImages.truncate();
+        await PokemonImages.sequelize.query("SET FOREIGN_KEY_CHECKS = 1", null);
+        await PokemonData.sequelize.query("SET FOREIGN_KEY_CHECKS = 0", null);
+        const pokemon_data = await PokemonData.truncate();
+        await PokemonData.sequelize.query("SET FOREIGN_KEY_CHECKS = 1", null);
+        await Items.sequelize.query("SET FOREIGN_KEY_CHECKS = 0", null);
+        const items_delete = await Items.truncate();
+        await Items.sequelize.query("SET FOREIGN_KEY_CHECKS = 1", null);
         await Promise.all([items_delete, pokemon_data, pokemon_images]);
     }
 

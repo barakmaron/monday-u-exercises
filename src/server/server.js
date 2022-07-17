@@ -38,7 +38,7 @@ app.get('*', function(req, res) {
 });
 
 
-/*app.use(ErrorHandler);
+app.use(ErrorHandler);
 
 process.on('unhandledRejection', (reason, promise) => {
     console.log('Uncaught Rejection', reason.message);
@@ -48,7 +48,7 @@ process.on('unhandledRejection', (reason, promise) => {
 process.on('uncaughtException', (error) => {
     console.log("Uncaught Exception", error.message);
     process.exit(1);
-});*/
+});
 
 const server = app.listen(process.env.PORT || 3000, () => {
     const { address, port } = server.address();
