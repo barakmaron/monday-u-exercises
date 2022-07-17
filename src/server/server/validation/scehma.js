@@ -8,7 +8,7 @@ const SCHEMA_ID = {
 
 const SCHEMA_TASK = {
     task: {
-        in: ['params', 'query'],
+        in: ['data', 'query', 'params'],
         errorMessage: 'Task is wrong',
         isLength: {
             errorMessage: `Task cant be empty`,
