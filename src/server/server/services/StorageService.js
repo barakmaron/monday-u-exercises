@@ -20,7 +20,8 @@ class StorageService {
     async CreateTask(task, t = null) {
         return await Items.create({
             'ItemName': task.name,
-            'is_pokemon': task.is_pokemon
+            'is_pokemon': task.is_pokemon,
+            'status': task.status
         }, { transaction: t });
     }
 
