@@ -27,6 +27,7 @@ async function AddTask(request, response, next) {
       task_inserted = ItemManagerService.AddRegularTask(task);
     }
     await task_inserted;
+    console.log(response.status);
     return response.status(201).json({
       status: 201,
       task: task
